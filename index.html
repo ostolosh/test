@@ -1,0 +1,2558 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Кушницький ліцей</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: ліва редакційна сітка; героєм є живий дзвінок (який зараз урок), далі новини з Facebook, про ліцей, розклад, вступ. */
+:root {
+  --bg: #f4f6f3;
+  --surface: #ffffff;
+  --ink: #12201b;
+  --muted: #55645d;
+  --line: #dbe2dc;
+  --accent: #0b6b50;
+  --accent-ink: #ffffff;
+  --sun: #f0b429;
+  --sun-ink: #3a2a00;
+  --f-display: "Unbounded", "Onest", system-ui, sans-serif;
+  --f-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1613; --surface: #15201b; --ink: #e7efe9; --muted: #9fb0a6; --line: #26352d;
+    --accent: #3fc79a; --accent-ink: #06241a; --sun-ink: #3a2a00; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1613; --surface: #15201b; --ink: #e7efe9; --muted: #9fb0a6; --line: #26352d;
+  --accent: #3fc79a; --accent-ink: #06241a; --sun-ink: #3a2a00; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.6 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1120px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.15; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+.eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* header */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 15px/1.1 var(--f-display); }
+.brand .mark { width: 34px; height: 34px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-size: 17px; }
+nav { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+nav a { text-decoration: none; padding: 8px 12px; border-radius: 999px; font-weight: 500; font-size: 14px; color: var(--muted); }
+nav a:hover { background: var(--surface); color: var(--ink); }
+@media (max-width: 720px) { nav a:not(.keep) { display: none; } }
+
+/* hero */
+.hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; padding-block: 56px 48px; align-items: center; }
+.hero > * { min-width: 0; }
+.hero h1 { font-size: clamp(30px, 5.2vw, 52px); margin-top: 16px; }
+.hero p.lead { font-size: 18px; color: var(--muted); max-width: 52ch; margin: 20px 0 28px; }
+.btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; border-radius: 999px; font-weight: 600; text-decoration: none; border: 1.5px solid var(--ink); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:hover { transform: translateY(-1px); }
+.bell { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 24px; }
+.bell .row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.bell .big { font: 700 64px/1 var(--f-display); color: var(--accent); margin-top: 18px; }
+.bell .big small { font: 500 14px var(--f-mono); color: var(--muted); letter-spacing: .04em; margin-left: 8px; }
+.bell .state { margin: 6px 0 18px; color: var(--muted); }
+.bar { height: 10px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--sun); transition: width .6s ease; }
+.bell .next { margin-top: 14px; font: 500 13px var(--f-mono); color: var(--muted); }
+@media (max-width: 860px) { .hero { grid-template-columns: 1fr; gap: 28px; padding-block: 32px; } }
+
+section { padding-block: 56px; border-top: 1px solid var(--line); }
+section > .wrap > h2 { font-size: clamp(24px, 3.4vw, 34px); margin: 12px 0 28px; }
+
+/* news */
+.news { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 20px; }
+.post { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.post .ph { aspect-ratio: 16 / 9; background: var(--line); display: grid; place-items: center; overflow: hidden; }
+.post .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.post .ph.none { background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--bg))); color: var(--accent-ink); font: 700 44px/1 var(--f-display); }
+.post .body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.post time { font: 500 12px var(--f-mono); color: var(--muted); letter-spacing: .04em; }
+.post h3 { font-size: 17px; line-height: 1.3; }
+.post p { margin: 0; color: var(--muted); font-size: 15px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line; }
+.post .more { margin-top: auto; padding-top: 6px; font-weight: 600; font-size: 14px; color: var(--accent); text-decoration: none; }
+.post .more:hover { text-decoration: underline; }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.acc { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 0 18px; margin-bottom: 10px; }
+.acc summary { cursor: pointer; min-height: 48px; display: flex; align-items: center; font-weight: 600; list-style: none; gap: 10px; }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary::after { content: "+"; margin-left: auto; font: 500 20px var(--f-mono); color: var(--accent); }
+.acc[open] summary::after { content: "−"; }
+.acc .cnt { font: 500 12px var(--f-mono); color: var(--muted); }
+.acc ul { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 4px 24px; }
+.acc li { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 15px; min-width: 0; overflow-wrap: anywhere; }
+.acc li span { display: block; color: var(--muted); font-size: 13px; }
+.acc a { color: var(--accent); text-decoration: none; }
+.acc a:hover { text-decoration: underline; }
+.note { color: var(--muted); font-size: 14px; margin: 16px 0 0; }
+dialog.modal { width: min(760px, calc(100vw - 24px)); max-height: calc(100vh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 18px; background: var(--bg); color: var(--ink); overflow: auto; }
+dialog.modal::backdrop { background: rgba(8, 16, 12, .6); }
+.modal .mhead { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg); border-bottom: 1px solid var(--line); z-index: 1; }
+.modal .mclose { min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font: 600 14px var(--f-body); cursor: pointer; }
+.modal .mbody { padding: 20px 20px 28px; display: grid; gap: 16px; }
+.modal h3 { font-size: clamp(20px, 3.2vw, 28px); }
+.modal .mtext { white-space: pre-line; margin: 0; max-width: 64ch; }
+.modal .photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); gap: 10px; }
+.modal .photos a { display: block; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; background: var(--line); }
+.modal .photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal .files { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.modal .files a { display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--accent); font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+.modal .files a:hover { text-decoration: underline; }
+.post button.more { background: none; border: 0; padding: 6px 0 0; text-align: left; cursor: pointer; font: 600 14px var(--f-body); }
+.pin { align-self: flex-start; font: 500 11px var(--f-mono); padding: 3px 8px; border-radius: 99px; border: 1px solid var(--accent); color: var(--accent); }
+.albums { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 16px; }
+.album { padding: 0; text-align: left; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: inherit; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; font: inherit; }
+.album .ph { aspect-ratio: 4 / 3; background: var(--line); overflow: hidden; }
+.album .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.album .meta { padding: 12px 14px 14px; display: grid; gap: 2px; }
+.album b { font-weight: 600; }
+.album span { color: var(--muted); font-size: 13px; }
+.tag { align-self: flex-start; font: 500 11px var(--f-mono); padding: 3px 8px; border-radius: 99px; background: var(--sun); color: var(--sun-ink); }
+.newsfoot { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px; color: var(--muted); font-size: 14px; }
+.newsfoot button { font: 600 15px var(--f-body); min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+.newsfoot button:hover { background: var(--surface); }
+
+/* about + tracks */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.cols > * { min-width: 0; }
+.cols p { margin: 0 0 14px; max-width: 62ch; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: start; }
+.fact { border: 1px solid var(--line); border-radius: var(--r); padding: 16px; background: var(--surface); }
+.fact b { display: block; font: 700 28px/1.1 var(--f-display); color: var(--accent); }
+.fact span { font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; gap: 24px; } }
+.tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; }
+.track { border-top: 3px solid var(--accent); padding-top: 14px; }
+.track h3 { font-size: 17px; margin-bottom: 8px; }
+.track p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* schedule */
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 420px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+th { font: 500 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+td.t { font-family: var(--f-mono); }
+tr.now td { background: color-mix(in srgb, var(--sun) 30%, var(--surface)); font-weight: 600; }
+
+/* admission + contacts */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; }
+.steps li::before { content: "Крок " counter(s); display: block; font: 500 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.steps b { display: block; margin-bottom: 4px; }
+.steps span { color: var(--muted); font-size: 15px; }
+dl.contacts { display: grid; grid-template-columns: max-content 1fr; gap: 10px 24px; margin: 0; }
+dl.contacts dt { color: var(--muted); }
+dl.contacts dd { margin: 0; overflow-wrap: anywhere; }
+footer { border-top: 1px solid var(--line); padding-block: 28px max(28px, env(safe-area-inset-bottom, 0px)); color: var(--muted); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+/* розклад */
+.pagehead { padding-block: 40px 8px; }
+.pagehead h1 { font-size: clamp(28px, 4.6vw, 44px); margin-top: 14px; }
+.banner { margin: 20px 0 0; padding: 12px 16px; border-radius: var(--r); background: color-mix(in srgb, var(--sun) 28%, var(--surface)); color: var(--ink); font-size: 14px; border: 1px solid color-mix(in srgb, var(--sun) 60%, var(--line)); }
+.controls { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; margin: 28px 0 18px; }
+.seg { display: inline-flex; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.seg button { font: 600 14px var(--f-body); min-height: 40px; padding: 0 18px; border: 0; background: transparent; color: var(--muted); border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 600 14px var(--f-body); min-height: 40px; min-width: 48px; padding: 0 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip .today { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--sun); margin-left: 6px; vertical-align: middle; }
+.label { font: 500 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
+.sched { overflow: auto; max-height: 78vh; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.sched table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 0; }
+.sched th, .sched td { padding: 10px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); vertical-align: top; text-align: left; font-size: 14px; line-height: 1.35; }
+.sched th:last-child, .sched td:last-child { border-right: 0; }
+.sched tr:last-child td { border-bottom: 0; }
+.sched thead th { position: sticky; top: 0; z-index: 2; background: var(--surface); font: 600 13px var(--f-body); letter-spacing: 0; text-transform: none; color: var(--ink); box-shadow: 0 1px 0 var(--line); }
+.sched .num { position: sticky; left: 0; z-index: 1; background: var(--surface); min-width: 84px; width: 84px; }
+.sched thead .num { z-index: 3; }
+.num b { display: block; font: 700 18px/1 var(--f-display); }
+.num span { font: 500 11px var(--f-mono); color: var(--muted); }
+.sched td small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+.sched td.free { color: var(--muted); }
+.sched td.col-today, .sched th.col-today { background: color-mix(in srgb, var(--sun) 16%, var(--surface)); }
+.sched td.now { background: color-mix(in srgb, var(--sun) 42%, var(--surface)); font-weight: 600; box-shadow: inset 3px 0 0 var(--accent); }
+.general td, .general th { min-width: 118px; }
+.byclass td, .byclass th { min-width: 130px; }
+.empty { padding: 28px; color: var(--muted); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; }
+.legend .a { background: color-mix(in srgb, var(--sun) 42%, var(--surface)); box-shadow: inset 3px 0 0 var(--accent); }
+.legend .b { background: color-mix(in srgb, var(--sun) 16%, var(--surface)); border: 1px solid var(--line); }
+@media (max-width: 560px) { .sched th, .sched td { padding: 9px 10px; } .sched .num { min-width: 70px; width: 70px; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="mark">К</span><span>Кушницький<br>ліцей</span></a>
+    <nav aria-label="Основна навігація">
+      <a class="keep" href="#news">Новини</a>
+      <a href="#about">Про ліцей</a>
+      <a href="#gallery">Фото</a>
+      <a href="#staff">Вчителі</a>
+      <a class="keep" href="#rozklad">Розклад</a>
+      <a href="#admission">Вступ</a>
+      <a href="#docs">Документи</a>
+      <a class="keep" href="#contacts">Контакти</a>
+    </nav>
+  </div>
+</header>
+
+<!--DATA-->
+<script type="application/json" id="data-posts.json">{
+  "updated": "2026-10-29T10:00:00.000Z",
+  "source": "legacy",
+  "pageUrl": "https://kyshnica-soh.ucoz.ua/news/",
+  "posts": [
+    {
+      "id": "legacy-606",
+      "date": "2026-10-29T12:00:00+02:00",
+      "text": "Ярмарок добра, єдності та вдячності\nУчні, батьки та педагоги провели благодійний ярмарок. Подяка Центру учнівського самоврядування та батькам, які приготували частування. Виручку спрямують на матеріали для плетіння сіток для ЗСУ.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/jarmarod_dobra_ednosti_ta_vdjachnosti/2026-10-29-606",
+      "legacy": true
+    },
+    {
+      "id": "legacy-605",
+      "date": "2026-10-29T12:00:00+02:00",
+      "text": "Радіодиктант національної єдності\nУ День української писемності та мови педагоги ліцею долучилися до написання Радіодиктанту національної єдності.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/radiodiktant_nacionalnoji_ednosti/2026-10-29-605",
+      "legacy": true
+    },
+    {
+      "id": "legacy-604",
+      "date": "2026-10-16T12:00:00+02:00",
+      "text": "Всесвітній день здорового харчування\nПро те, як щоденні харчові звички впливають на самопочуття, настрій і здоров'я. Поради: більше овочів і фруктів, достатньо води, повноцінний сніданок.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/vsesvitnij_den_zdorovogo_kharchuvannja/2026-10-16-604",
+      "legacy": true
+    },
+    {
+      "id": "legacy-603",
+      "date": "2026-10-16T12:00:00+02:00",
+      "text": "Всесвітній день здоров'я\nУчні 2-А класу говорили про вітаміни та збалансовану тарілку, а потім самі приготували фруктові смузі й салати.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/vsesvitnij_den_zdorov_39_ja/2026-10-16-603",
+      "legacy": true
+    },
+    {
+      "id": "legacy-602",
+      "date": "2026-10-16T12:00:00+02:00",
+      "text": "День здорового харчування\nУчні 6-Б класу зняли гумористичне відео про правильний вибір продуктів і корисні звички.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/den_zdorovogo_kharchuvannja/2026-10-16-602",
+      "legacy": true
+    },
+    {
+      "id": "legacy-601",
+      "date": "2026-10-16T12:00:00+02:00",
+      "text": "Твій вибір - твоє здоров'я!\nДев'ятикласники зняли ролик до Дня здорового харчування: більше фруктів і овочів, вода замість солодких напоїв, більше руху на свіжому повітрі.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/tvij_vibir_tvoe_zdorov_39_ja/2026-10-16-601",
+      "legacy": true
+    },
+    {
+      "id": "legacy-599",
+      "date": "2026-10-13T12:00:00+02:00",
+      "text": "Ментальне здоров'я\nПро турботу про психічне здоров'я: прислухатися до себе, відпочивати, ділитися переживаннями й підтримувати близьких.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/mentalne_zdorov_39_ja/2026-10-13-599",
+      "legacy": true
+    },
+    {
+      "id": "legacy-598",
+      "date": "2026-10-13T12:00:00+02:00",
+      "text": "Осінній ярмарок\nЯрмарок добра й єдності на підтримку української армії. Подяка Центру учнівського самоврядування, президентці учнівської ради та батькам. Кошти підуть на сітки для ЗСУ.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/osinnij_jarmarok/2026-10-13-598",
+      "legacy": true
+    },
+    {
+      "id": "legacy-597",
+      "date": "2026-10-02T12:00:00+02:00",
+      "text": "День захисників та захисниць України\nПодяка військовим і всім, хто допомагає захищати країну, вшанування загиблих, згадка про земляків і випускників ліцею.",
+      "image": "",
+      "url": "https://kyshnica-soh.ucoz.ua/news/den_zakhisnikiv_ta_zakhisnic_ukrajini/2026-10-02-597",
+      "legacy": true
+    }
+  ]
+}</script>
+<script type="application/json" id="data-posts-manual.json">{ "posts": [] }</script>
+<script type="application/json" id="data-gallery.json">{ "albums": [] }</script>
+<script type="application/json" id="data-staff.json">{
+ "source": "https://kyshnica-soh.ucoz.ua/index/vchiteli_liceju/0-58",
+ "groups": [
+  {
+   "title": "Керівництво",
+   "people": [
+    {
+     "name": "Сньозик Яна Іванівна",
+     "role": "Директор ліцею"
+    },
+    {
+     "name": "Самолюк Ганна Федорівна",
+     "role": "Заступник директора з навчальної роботи"
+    },
+    {
+     "name": "Дочинець Вікторія Юріївна",
+     "role": "Заступник директора з виховної роботи"
+    }
+   ]
+  },
+  {
+   "title": "Початкова школа",
+   "people": [
+    {
+     "name": "Павелко Віра Іванівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Митиньканич Мар'яна Степанівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Гецко Наталія Григорівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Трина Ганна Василівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Буркуш Ганна Михайлівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Павлович Марія Дмитрівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Трина Марія Михайлівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Лолин Наталія Василівна",
+     "role": "Вчитель початкових класів"
+    },
+    {
+     "name": "Будул Ганна Михайлівна",
+     "role": "Вчитель початкових класів"
+    }
+   ]
+  },
+  {
+   "title": "Мови і література",
+   "people": [
+    {
+     "name": "Ковач Ганна Іванівна",
+     "role": "Вчитель української мови та літератури"
+    },
+    {
+     "name": "Гецко Марія Іванівна",
+     "role": "Вчитель української мови та літератури"
+    },
+    {
+     "name": "Батрин Валерій Іванович",
+     "role": "Вчитель української мови та літератури"
+    },
+    {
+     "name": "Бокоч Руслана Дмитрівна",
+     "role": "Вчитель української мови та літератури"
+    },
+    {
+     "name": "Продан Лілія Родіонівна",
+     "role": "Вчитель зарубіжної літератури"
+    }
+   ]
+  },
+  {
+   "title": "Іноземні мови",
+   "people": [
+    {
+     "name": "Бабець Марина Іванівна",
+     "role": "Вчитель англійської мови"
+    },
+    {
+     "name": "Ньорба Віра Іванівна",
+     "role": "Вчитель німецької мови"
+    },
+    {
+     "name": "Дочинець Світлана Григорівна",
+     "role": "Вчитель англійської мови"
+    },
+    {
+     "name": "Петришинець Руслана Михайлівна",
+     "role": "Вчитель англійської та німецької мов"
+    },
+    {
+     "name": "Гецко Ірина Іванівна",
+     "role": "Вчитель німецької мови, вчитель-асистент"
+    },
+    {
+     "name": "Дочинець Ярослава Іванівна",
+     "role": "Вчитель німецької мови"
+    },
+    {
+     "name": "Кікало Анжеліка Георгіївна",
+     "role": "Вчитель англійської та німецької мов"
+    }
+   ]
+  },
+  {
+   "title": "Математика та природничі науки",
+   "people": [
+    {
+     "name": "Гецко Марія Михайлівна",
+     "role": "Вчитель математики"
+    },
+    {
+     "name": "Будул Мар'яна Іванівна",
+     "role": "Вчитель математики"
+    },
+    {
+     "name": "Городній Наталія Юріївна",
+     "role": "Вчитель інформатики та фізики"
+    },
+    {
+     "name": "Калинич Людмила Юріївна",
+     "role": "Вчитель інформатики"
+    },
+    {
+     "name": "Барна Ганна Іванівна",
+     "role": "Вчитель фізики"
+    },
+    {
+     "name": "Косик Ганна Дмитрівна",
+     "role": "Вчитель хімії"
+    },
+    {
+     "name": "Гартавел Іванна Василівна",
+     "role": "Вчитель біології, вчитель-асистент"
+    },
+    {
+     "name": "Лапко Ганна Василівна",
+     "role": "Вчитель біології, вихователь ГПД"
+    },
+    {
+     "name": "Штефко Марія Михайлівна",
+     "role": "Вчитель географії"
+    }
+   ]
+  },
+  {
+   "title": "Суспільні науки",
+   "people": [
+    {
+     "name": "Чічур Вікторія Валеріївна",
+     "role": "Вчитель історії"
+    },
+    {
+     "name": "Вовчук Віра Іванівна",
+     "role": "Вчитель історії"
+    }
+   ]
+  },
+  {
+   "title": "Мистецтво та спорт",
+   "people": [
+    {
+     "name": "Василенко Наталія Михайлівна",
+     "role": "Вчитель образотворчого мистецтва"
+    },
+    {
+     "name": "Губаль Наталія Василівна",
+     "role": "Вчитель музичного мистецтва (сумісник)"
+    },
+    {
+     "name": "Дерин Дмитро Васильович",
+     "role": "Вчитель фізичного виховання"
+    },
+    {
+     "name": "Райда Михайло Михайлович",
+     "role": "Вчитель фізичного виховання"
+    },
+    {
+     "name": "Куртинець Наталія Іванівна",
+     "role": "Вчитель фізичного виховання"
+    }
+   ]
+  },
+  {
+   "title": "Виховна робота та підтримка",
+   "people": [
+    {
+     "name": "Форгачі Наталія Дмитрівна",
+     "role": "Педагог-організатор"
+    },
+    {
+     "name": "Ільканич Марина Іванівна",
+     "role": "Вчитель-асистент"
+    },
+    {
+     "name": "Борбіль Тетяна Василівна",
+     "role": "Вчитель-асистент"
+    },
+    {
+     "name": "Нитка Ганна Михайлівна",
+     "role": "Вчитель-асистент"
+    },
+    {
+     "name": "Лолин Софія Іванівна",
+     "role": "Вихователь ГПД"
+    },
+    {
+     "name": "Гецко Ольга Юріївна",
+     "role": "Вихователь ГПД"
+    },
+    {
+     "name": "Вішован Марія Василівна",
+     "role": "Вихователь ГПД"
+    },
+    {
+     "name": "Денчиля Ганна Михайлівна",
+     "role": "Вихователь ГПД"
+    },
+    {
+     "name": "Гецко Світлана Іванівна",
+     "role": "Вихователь ГПД"
+    },
+    {
+     "name": "Бучмей Олександра Василівна",
+     "role": "Вихователь ГПД"
+    }
+   ]
+  }
+ ]
+}</script>
+<script type="application/json" id="data-docs.json">{
+ "groups": [
+  {
+   "title": "Публічна інформація",
+   "note": "Сторінки на старому сайті",
+   "links": [
+    {
+     "title": "Статут закладу освіти",
+     "url": "https://kyshnica-soh.ucoz.ua/index/statut_zakladu_osviti/0-17"
+    },
+    {
+     "title": "Ліцензія на провадження освітньої діяльності",
+     "url": "https://kyshnica-soh.ucoz.ua/index/licenzija_na_provadzhennja_osvitnoji_dijalnosti/0-22"
+    },
+    {
+     "title": "Сертифікат про акредитацію освітніх програм",
+     "url": "https://kyshnica-soh.ucoz.ua/index/sertifikat_pro_akreditaciju_osvitnikh_program/0-34"
+    },
+    {
+     "title": "Свідоцтво про атестацію",
+     "url": "https://kyshnica-soh.ucoz.ua/index/svidoctvo_pro_atestaciju/0-18"
+    },
+    {
+     "title": "Виписка з єдиного державного реєстру",
+     "url": "https://kyshnica-soh.ucoz.ua/index/vipiska_z_edinogo_derzhavnogo_reestru/0-54"
+    },
+    {
+     "title": "Правила прийому до закладу",
+     "url": "https://kyshnica-soh.ucoz.ua/index/pravila_prijomu_do_zakladu/0-30"
+    },
+    {
+     "title": "Правила поведінки здобувача освіти",
+     "url": "https://kyshnica-soh.ucoz.ua/index/pravila_povedieki_zdobuvacha_osviti_u_zakladi_osviti/0-56"
+    },
+    {
+     "title": "Мова освітнього процесу",
+     "url": "https://kyshnica-soh.ucoz.ua/index/mova_osvitnogo_procesu/0-23"
+    },
+    {
+     "title": "Кадровий склад",
+     "url": "https://kyshnica-soh.ucoz.ua/index/kadrovij_sklad/0-21"
+    },
+    {
+     "title": "Вакантні посади",
+     "url": "https://kyshnica-soh.ucoz.ua/index/vakantni_posadi/0-25"
+    },
+    {
+     "title": "Матеріально-технічне забезпечення",
+     "url": "https://kyshnica-soh.ucoz.ua/index/materialno_tekhnichne_zabezpechennjazakladu/0-24"
+    },
+    {
+     "title": "Умови доступності для осіб з особливими потребами",
+     "url": "https://kyshnica-soh.ucoz.ua/index/umovi_dostupnosti_navchalnogo_zakladu_dlja_navchannja_osib_z_osoblivimi_potrebami/0-31"
+    },
+    {
+     "title": "Річний звіт про діяльність закладу освіти",
+     "url": "https://kyshnica-soh.ucoz.ua/index/richnij_zvit_pro_dijalnist_zakladu_osviti/0-33"
+    },
+    {
+     "title": "Моніторинг якості освіти",
+     "url": "https://kyshnica-soh.ucoz.ua/index/monitoring_jakosti_osviti/0-32"
+    },
+    {
+     "title": "Перелік додаткових послуг",
+     "url": "https://kyshnica-soh.ucoz.ua/index/perelik_dodatkovikh_poslug/0-29"
+    },
+    {
+     "title": "Наявність гуртожитків",
+     "url": "https://kyshnica-soh.ucoz.ua/index/najavnist_gurtozhitkiv/0-26"
+    }
+   ]
+  },
+  {
+   "title": "Освітні програми, 1–4 класи",
+   "links": [
+    {
+     "title": "Українська мова",
+     "url": "https://kyshnica-soh.ucoz.ua/1-ukrayinska-mova-1-4-klas.lyuba.doc"
+    },
+    {
+     "title": "Літературне читання, 2–4 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/2-literaturne-chitannya-2-4-klas-29.07-tanya-1-.docx"
+    },
+    {
+     "title": "Математика",
+     "url": "https://kyshnica-soh.ucoz.ua/4-matematika-1-4-klas.doc"
+    },
+    {
+     "title": "Інформатика, 2–4 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/5-informatika-2-4-klas.docx"
+    },
+    {
+     "title": "Основи здоров'я",
+     "url": "https://kyshnica-soh.ucoz.ua/6-osnovi-zdorovya-1-4-klas.doc"
+    },
+    {
+     "title": "Я у світі, 3–4 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/7-ya-u-sviti-3-4-klas.docx"
+    },
+    {
+     "title": "Мистецтво",
+     "url": "https://kyshnica-soh.ucoz.ua/8-mistecztvo-1-4-klas.doc"
+    },
+    {
+     "title": "Образотворче мистецтво",
+     "url": "https://kyshnica-soh.ucoz.ua/9-obrazotvorche-mistecztvo-1-4-klas.doc"
+    },
+    {
+     "title": "Трудове навчання",
+     "url": "https://kyshnica-soh.ucoz.ua/10-trudovenavchannya-1-4-klas.doc"
+    },
+    {
+     "title": "Природознавство",
+     "url": "https://kyshnica-soh.ucoz.ua/12-prirodoznavstvo-1-4-klas.doc"
+    },
+    {
+     "title": "Курс українознавства «Я люблю Україну»",
+     "url": "https://kyshnica-soh.ucoz.ua/1programa-ya-lyublyu-ukrainu.docx"
+    },
+    {
+     "title": "Типова освітня програма (О. Я. Савченко)",
+     "url": "https://kyshnica-soh.ucoz.ua/1tipova-osvitnya-programa-rozroblena-pid-kerivnits.docx"
+    },
+    {
+     "title": "Типова освітня програма (Р. Б. Шиян)",
+     "url": "https://kyshnica-soh.ucoz.ua/tipovaosvitnyaprograma1.doc"
+    }
+   ]
+  },
+  {
+   "title": "Освітні програми, 5–6 класи (НУШ)",
+   "links": [
+    {
+     "title": "Математика",
+     "url": "https://kyshnica-soh.ucoz.ua/matematika_5-6kl_ister.pdf"
+    },
+    {
+     "title": "Іноземна мова, 5–9 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/Inoz.mov.5-9-kl.Zymomrya.ta.in.14.07.pdf"
+    },
+    {
+     "title": "Друга іноземна мова, 5–9 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/im_druga_inozemna_mova_programa_5-9kl_redko_ta_in..pdf"
+    },
+    {
+     "title": "Інформатика",
+     "url": "https://kyshnica-soh.ucoz.ua/Inform.5-6-kl.Zavadskyy.ta.in.27.09.pdf"
+    },
+    {
+     "title": "Зарубіжна література",
+     "url": "https://kyshnica-soh.ucoz.ua/zarubizhna_literatura_5-6kl_nikolenko_ta_in..pdf"
+    },
+    {
+     "title": "Вступ до історії України та громадянської освіти, 5 клас",
+     "url": "https://kyshnica-soh.ucoz.ua/vstup_do_istoriji_ukrajini_ta_gromadjan_osviti_5kl.pdf"
+    },
+    {
+     "title": "Технології",
+     "url": "https://kyshnica-soh.ucoz.ua/Tekhnol.5-6-klas.Khodzytska.ta.in.14.07.pdf"
+    },
+    {
+     "title": "Пізнаємо природу",
+     "url": "https://kyshnica-soh.ucoz.ua/Pizn.pryr.5-6-kl.Korshevnyuk.14.07.pdf"
+    },
+    {
+     "title": "Здоров'я, безпека та добробут",
+     "url": "https://kyshnica-soh.ucoz.ua/Zdorov.bezp.ta.dobrob.5-6-kl.Hushchyna.Vasylashko..pdf"
+    },
+    {
+     "title": "Українська мова",
+     "url": "https://kyshnica-soh.ucoz.ua/Ukr.mova.5-6-kl.Holub.Horoshkina.14.07.pdf"
+    },
+    {
+     "title": "Українська література",
+     "url": "https://kyshnica-soh.ucoz.ua/Ukr.lit.5-6-kl.Arkhypova.Sichkar.Shylo.14.07.pdf"
+    }
+   ]
+  },
+  {
+   "title": "Освітні програми, 5–9 класи (2017)",
+   "links": [
+    {
+     "title": "Трудове навчання",
+     "url": "https://kyshnica-soh.ucoz.ua/2-trudove-navchannya-5-9.doc"
+    },
+    {
+     "title": "Математика",
+     "url": "https://kyshnica-soh.ucoz.ua/5-programa-z-matematiki.docx"
+    },
+    {
+     "title": "Фізика",
+     "url": "https://kyshnica-soh.ucoz.ua/7-fizika.doc"
+    },
+    {
+     "title": "Інформатика",
+     "url": "https://kyshnica-soh.ucoz.ua/8-informatika.docx"
+    },
+    {
+     "title": "Хімія, 7–9 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/10-ximiya-7-9.doc"
+    },
+    {
+     "title": "Українська мова",
+     "url": "https://kyshnica-soh.ucoz.ua/11-ukrayinska-mova-onovlena-programa-dlya-5-9-kl-1.docx"
+    },
+    {
+     "title": "Природознавство",
+     "url": "https://kyshnica-soh.ucoz.ua/12.prirodoznavstvo.docx"
+    },
+    {
+     "title": "Історія",
+     "url": "https://kyshnica-soh.ucoz.ua/14.history-5-9klas-21.05.2017-finish.doc"
+    },
+    {
+     "title": "Біологія, 6–9 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/15.biologiya-6-9.docx"
+    },
+    {
+     "title": "Географія, 6–9 класи",
+     "url": "https://kyshnica-soh.ucoz.ua/geografiya-6-9-14.07.2017.pdf"
+    },
+    {
+     "title": "Українська література",
+     "url": "https://kyshnica-soh.ucoz.ua/na-sajt-ukrayinska-literatura-5-9-z-chervonimdoc-2.pdf"
+    },
+    {
+     "title": "Правознавство",
+     "url": "https://kyshnica-soh.ucoz.ua/pravoznavstvo-9-8.docx"
+    },
+    {
+     "title": "Іноземні мови",
+     "url": "https://kyshnica-soh.ucoz.ua/programi-inozemni-movi-5-9-12.06.2017.pdf"
+    }
+   ]
+  },
+  {
+   "title": "Освітні програми, 10–11 класи (з 2018 року)",
+   "links": [
+    {
+     "title": "Зарубіжна література, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/25062018zarublit-10-11-riven-standartu-2.doc"
+    },
+    {
+     "title": "Астрономія",
+     "url": "https://kyshnica-soh.ucoz.ua/astronomiya-avtorskij-kolektiv-pid-kerivnicztvom-y.pdf"
+    },
+    {
+     "title": "Біологія і екологія, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/biologiya-i-ekologiya-10-11-kl-riven-standartu-obg.doc"
+    },
+    {
+     "title": "Економіка",
+     "url": "https://kyshnica-soh.ucoz.ua/ekonomika-profilnij-riven-31102017.doc"
+    },
+    {
+     "title": "Фізична культура, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/fizichna-kultura-10-11-kl-standart.doc"
+    },
+    {
+     "title": "Фізика (за ред. В. М. Локтєва)",
+     "url": "https://kyshnica-soh.ucoz.ua/fizika-10-11-avtorskij-kolektiv-pid-kerivnicztvom-.pdf"
+    },
+    {
+     "title": "Фізика і астрономія (за ред. О. І. Ляшенка)",
+     "url": "https://kyshnica-soh.ucoz.ua/fizika-i-astronomiya-10-11-avtorskij-kolektiv-pid-.doc"
+    },
+    {
+     "title": "Географія, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/geografiya-10-11final-21112017.doc"
+    },
+    {
+     "title": "Інформатика, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/informatika-standart-10-11-2-.docx"
+    },
+    {
+     "title": "Іноземні мови",
+     "url": "https://kyshnica-soh.ucoz.ua/inozemni-movi-10-11-19.09.2017.pdf"
+    },
+    {
+     "title": "Українська література, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/ukr.lit-10-11-riven-standartu.docx"
+    },
+    {
+     "title": "Українська мова, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/ukr.mova-10-11-riven-standartu.docx"
+    },
+    {
+     "title": "Захист Вітчизни, рівень стандарту",
+     "url": "https://kyshnica-soh.ucoz.ua/zaxist-vitchizni-riven-standartu-zatverdzhena13.12.doc"
+    }
+   ]
+  }
+ ]
+}</script>
+<script type="application/json" id="data-streets.json">["Шкільна", "Гірська", "Перемоги", "Раковий", "Центральна", "Набережна", "Пушкіна", "Вовчий", "Лесі Українки", "Українська", "Молодіжна", "Зелена", "Садова", "Шевченка", "Лужок", "Лісова", "Фізкультурна", "Першотравнева"]</script>
+<script type="application/json" id="data-schedule.json">{
+ "sample": true,
+ "updated": "2026-10-29",
+ "days": [
+  "Понеділок",
+  "Вівторок",
+  "Середа",
+  "Четвер",
+  "П'ятниця"
+ ],
+ "bells": [
+  [
+   "08:30",
+   "09:15"
+  ],
+  [
+   "09:25",
+   "10:10"
+  ],
+  [
+   "10:30",
+   "11:15"
+  ],
+  [
+   "11:25",
+   "12:10"
+  ],
+  [
+   "12:20",
+   "13:05"
+  ],
+  [
+   "13:15",
+   "14:00"
+  ],
+  [
+   "14:10",
+   "14:55"
+  ]
+ ],
+ "classes": [
+  {
+   "id": "1a",
+   "name": "1-А",
+   "days": {
+    "1": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Я досліджую світ"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ],
+    "2": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Дизайн і технології"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "3": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Дизайн і технології"
+     }
+    ],
+    "4": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Дизайн і технології"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Мистецтво"
+     }
+    ],
+    "5": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Дизайн і технології"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ]
+   }
+  },
+  {
+   "id": "2a",
+   "name": "2-А",
+   "days": {
+    "1": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "2": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Інформатика"
+     }
+    ],
+    "3": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ],
+    "4": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "5": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Я досліджую світ"
+     },
+     {
+      "s": "Мистецтво"
+     }
+    ]
+   }
+  },
+  {
+   "id": "3a",
+   "name": "3-А",
+   "days": {
+    "1": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "2": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "3": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Інформатика"
+     }
+    ],
+    "4": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "5": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Англійська мова"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4a",
+   "name": "4-А",
+   "days": {
+    "1": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Я досліджую світ"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ],
+    "2": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Я досліджую світ"
+     },
+     {
+      "s": "Інформатика"
+     }
+    ],
+    "3": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "4": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Я досліджую світ"
+     }
+    ],
+    "5": [
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Я досліджую світ"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Інформатика"
+     }
+    ]
+   }
+  },
+  {
+   "id": "5a",
+   "name": "5-А",
+   "days": {
+    "1": [
+     {
+      "s": "Образотворче мистецтво"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Музичне мистецтво"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Історія"
+     }
+    ],
+    "2": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Пізнаємо природу"
+     }
+    ],
+    "3": [
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Образотворче мистецтво"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Музичне мистецтво"
+     },
+     {
+      "s": "Пізнаємо природу"
+     }
+    ],
+    "4": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Історія"
+     },
+     {
+      "s": "Музичне мистецтво"
+     },
+     {
+      "s": "Пізнаємо природу"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ],
+    "5": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Образотворче мистецтво"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ]
+   }
+  },
+  {
+   "id": "6a",
+   "name": "6-А",
+   "days": {
+    "1": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Історія"
+     },
+     {
+      "s": "Інформатика"
+     }
+    ],
+    "2": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Історія"
+     },
+     {
+      "s": "Німецька мова"
+     }
+    ],
+    "3": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Історія"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Пізнаємо природу"
+     }
+    ],
+    "4": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Історія"
+     },
+     {
+      "s": "Пізнаємо природу"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Англійська мова"
+     }
+    ],
+    "5": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Образотворче мистецтво"
+     }
+    ]
+   }
+  },
+  {
+   "id": "7a",
+   "name": "7-А",
+   "days": {
+    "1": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Фізика"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ],
+    "2": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Всесвітня історія"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Фізика"
+     }
+    ],
+    "3": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Хімія"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Фізика"
+     },
+     {
+      "s": "Технології"
+     }
+    ],
+    "4": [
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Біологія"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Хімія"
+     },
+     {
+      "s": "Географія"
+     }
+    ],
+    "5": [
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Всесвітня історія"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Українська література"
+     }
+    ]
+   }
+  },
+  {
+   "id": "8a",
+   "name": "8-А",
+   "days": {
+    "1": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Хімія"
+     },
+     {
+      "s": "Всесвітня історія"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Українська література"
+     }
+    ],
+    "2": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Всесвітня історія"
+     },
+     {
+      "s": "Біологія"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Фізика"
+     }
+    ],
+    "3": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Фізика"
+     },
+     {
+      "s": "Географія"
+     }
+    ],
+    "4": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Фізика"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Технології"
+     }
+    ],
+    "5": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Хімія"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Історія України"
+     }
+    ]
+   }
+  },
+  {
+   "id": "9a",
+   "name": "9-А",
+   "days": {
+    "1": [
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Біологія"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Мистецтво"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Хімія"
+     }
+    ],
+    "2": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Мистецтво"
+     }
+    ],
+    "3": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Англійська мова"
+     }
+    ],
+    "4": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Технології"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Німецька мова"
+     }
+    ],
+    "5": [
+     {
+      "s": "Математика"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Німецька мова"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Історія України"
+     }
+    ]
+   }
+  },
+  {
+   "id": "10a",
+   "name": "10-А",
+   "days": {
+    "1": [
+     {
+      "s": "Алгебра"
+     },
+     {
+      "s": "Громадянська освіта"
+     },
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Геометрія"
+     },
+     {
+      "s": "Фізика"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Хімія"
+     }
+    ],
+    "2": [
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Геометрія"
+     },
+     {
+      "s": "Хімія"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Захист України"
+     },
+     {
+      "s": "Біологія і екологія"
+     }
+    ],
+    "3": [
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Геометрія"
+     },
+     {
+      "s": "Захист України"
+     },
+     {
+      "s": "Фізика"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Історія України"
+     }
+    ],
+    "4": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Захист України"
+     },
+     {
+      "s": "Англійська мова"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Громадянська освіта"
+     },
+     {
+      "s": "Геометрія"
+     }
+    ],
+    "5": [
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Хімія"
+     },
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ]
+   }
+  },
+  {
+   "id": "11a",
+   "name": "11-А",
+   "days": {
+    "1": [
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Геометрія"
+     },
+     {
+      "s": "Громадянська освіта"
+     },
+     {
+      "s": "Захист України"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Історія України"
+     }
+    ],
+    "2": [
+     {
+      "s": "Українська мова"
+     },
+     {
+      "s": "Геометрія"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Хімія"
+     },
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Захист України"
+     },
+     {
+      "s": "Історія України"
+     }
+    ],
+    "3": [
+     {
+      "s": "Зарубіжна література"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Захист України"
+     },
+     {
+      "s": "Громадянська освіта"
+     },
+     {
+      "s": "Біологія і екологія"
+     },
+     {
+      "s": "Геометрія"
+     }
+    ],
+    "4": [
+     {
+      "s": "Алгебра"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Біологія і екологія"
+     },
+     {
+      "s": "Фізична культура"
+     },
+     {
+      "s": "Історія України"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Зарубіжна література"
+     }
+    ],
+    "5": [
+     {
+      "s": "Алгебра"
+     },
+     {
+      "s": "Географія"
+     },
+     {
+      "s": "Біологія і екологія"
+     },
+     {
+      "s": "Інформатика"
+     },
+     {
+      "s": "Українська література"
+     },
+     {
+      "s": "Фізична культура"
+     }
+    ]
+   }
+  }
+ ]
+}</script>
+<!--/DATA-->
+<script>
+/* Завантаження даних: спершу файл, якщо недоступний, то вбудована копія. */
+window.loadData = function (name) {
+  return fetch(name, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).catch(function () {
+    var n = document.getElementById("data-" + name);
+    if (!n) throw new Error("no data " + name);
+    return JSON.parse(n.textContent);
+  });
+};
+</script>
+<main id="top" data-view="main">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">Заклад загальної середньої освіти</span>
+      <h1>Ліцей, де навчання має сенс і наслідки</h1>
+      <p class="lead">Ліцей у селі Кушниця, який працює з 1953 року. Новини, розклад і документи в одному місці, а нові публікації зі сторінки у Facebook з'являються тут автоматично.</p>
+      <div class="btns">
+        <a class="btn primary" href="#news">Останні новини</a>
+        <a class="btn" href="#admission">Як вступити</a>
+      </div>
+    </div>
+    <aside class="bell" aria-live="polite">
+      <div class="row"><span class="eyebrow">Дзвінок у ліцеї</span><span class="eyebrow" id="clock">--:--</span></div>
+      <div class="big" id="bigNum">—<small id="bigUnit"></small></div>
+      <div class="state" id="bellState">Завантаження розкладу…</div>
+      <div class="bar" role="progressbar" aria-label="Прогрес уроку" aria-valuemin="0" aria-valuemax="100" id="bellBar"><i id="bellFill"></i></div>
+      <div class="next" id="bellNext"></div>
+    </aside>
+  </div>
+
+  <section id="news">
+    <div class="wrap">
+      <span class="eyebrow">Автоматично з Facebook</span>
+      <h2>Новини ліцею</h2>
+      <div class="news" id="newsGrid"><p style="color:var(--muted)">Завантажуємо новини…</p></div>
+      <div class="newsfoot">
+        <button type="button" id="moreBtn" hidden>Показати ще</button>
+        <span id="syncInfo"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <span class="eyebrow">Про нас</span>
+      <h2>Школа з історією з 1953 року</h2>
+      <div class="cols">
+        <div>
+          <p>Ліцей заснований у 1953 році, у нинішньому будинку працює з 1979 року. Тут навчаються діти 1–11 класів: початкова, основна та старша школа.</p>
+          <p>Вчителі беруть участь у конкурсах «Учитель року», а учні посідають призові місця на другому й третьому етапах шкільних олімпіад. У ліцеї є етнографічний музей, спортивна зала, ігровий майданчик і бібліотека, що одна з найбільших у районі.</p>
+        </div>
+        <div class="facts" aria-label="Ліцей у цифрах">
+          <div class="fact"><b>1953</b><span>рік заснування</span></div>
+          <div class="fact"><b>246</b><span>учнів</span></div>
+          <div class="fact"><b>17 532</b><span>примірники в бібліотеці</span></div>
+          <div class="fact"><b>1–11</b><span>класи</span></div>
+        </div>
+      </div>
+      <h3 style="font-size:19px;margin-top:40px">Гуртки та секції</h3>
+      <div class="tracks" style="margin-top:16px">
+        <div class="track"><h3>Патріотично-військовий</h3><p>Військово-патріотичне виховання.</p></div>
+        <div class="track"><h3>Козацько-лицарський</h3><p>Традиції козацтва та лицарства.</p></div>
+        <div class="track"><h3>Вокал і фольклор</h3><p>Вокальний та фольклорний гуртки.</p></div>
+        <div class="track"><h3>Чирлідинг і дизайн</h3><p>Спортивний та творчий напрями.</p></div>
+        <div class="track"><h3>Християнська етика</h3><p>Курс і гурток.</p></div>
+        <div class="track"><h3>Квант</h3><p>Гурток «Квант».</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Фотогалерея</span>
+      <h2>Життя ліцею</h2>
+      <div class="albums" id="albums"></div>
+    </div>
+  </section>
+
+  <section id="staff">
+    <div class="wrap">
+      <span class="eyebrow">Педагогічний колектив</span>
+      <h2>Вчителі ліцею</h2>
+      <p style="color:var(--muted);margin:-12px 0 20px;max-width:62ch">У колективі 1 учитель-методист, 7 старших учителів, 23 педагоги з вищою категорією, 12 з першою, 9 з другою та 35 спеціалістів.</p>
+      <div id="staffList"></div>
+    </div>
+  </section>
+
+  <section id="schedule">
+    <div class="wrap">
+      <span class="eyebrow">Розклад дзвінків</span>
+      <h2>Коли починаються й закінчуються уроки</h2>
+      <p style="margin:-12px 0 24px"><a class="btn primary" href="#rozklad">Розклад уроків по класах</a></p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Урок</th><th>Початок</th><th>Кінець</th><th>Перерва після</th></tr></thead>
+          <tbody id="schedBody"></tbody>
+        </table>
+      </div>
+      <!-- УВАГА: час дзвінків орієнтовний. Сторінка зі старого сайту не завантажилася; внесіть актуальні дані в масив BELLS у скрипті нижче. -->
+      <p class="note">Уточнюйте розклад дзвінків у приймальні: (031-44) 73-393.</p>
+    </div>
+  </section>
+
+  <section id="admission">
+    <div class="wrap">
+      <span class="eyebrow">Вступ</span>
+      <h2>Як потрапити до нашого ліцею</h2>
+      <p style="color:var(--muted);margin:-12px 0 24px;max-width:62ch">Прийом учнів відбувається на загальних засадах.</p>
+      <div class="cols">
+        <div>
+          <h3 style="font-size:18px;margin-bottom:12px">До 1 класу</h3>
+          <ul class="plain">
+            <li>Заява батьків (опікунів)</li>
+            <li>Копія свідоцтва про народження</li>
+            <li>Копія реєстраційного номера облікової картки</li>
+            <li>Медична довідка (до 1 вересня)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-size:18px;margin-bottom:12px">До інших класів</h3>
+          <p style="color:var(--muted);margin-bottom:10px">Під час переведення з іншого закладу освіти:</p>
+          <ul class="plain">
+            <li>Заява батьків (опікунів)</li>
+            <li>Особова справа здобувача освіти</li>
+          </ul>
+        </div>
+      </div>
+      <details class="acc" style="margin-top:32px">
+        <summary>Територія обслуговування</summary>
+        <p id="streets" style="margin:12px 0 4px;color:var(--muted)"></p>
+      </details>
+    </div>
+  </section>
+
+  <section id="docs">
+    <div class="wrap">
+      <span class="eyebrow">Публічна інформація</span>
+      <h2>Документи й освітні програми</h2>
+      <div id="docList"></div>
+      <p class="note">Посилання ведуть на матеріали старого сайту ліцею. Їх варто перенести на новий хостинг до вимкнення старого сайту.</p>
+    </div>
+  </section>
+
+  <section id="contacts">
+    <div class="wrap">
+      <span class="eyebrow">Контакти</span>
+      <h2>Зв'яжіться з нами</h2>
+      <dl class="contacts">
+        <dt>Адреса</dt><dd>90151, Закарпатська область, Хустський район, с. Кушниця, вул. Шкільна, 29</dd>
+        <dt>Телефон</dt><dd>(031-44) 73-393 (приймальня)</dd>
+        <dt>Пошта</dt><dd>kyshnica-soh@ukr.net</dd>
+        <dt>Старий сайт</dt><dd><a href="https://kyshnica-soh.ucoz.ua/" target="_blank" rel="noopener">kyshnica-soh.ucoz.ua</a></dd>
+        <dt>Facebook</dt><dd><a id="fbLink" href="https://www.facebook.com/" rel="noopener">Сторінка ліцею</a></dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<main id="viewSchedule" hidden>
+  <div class="wrap pagehead">
+    <span class="eyebrow">Навчальний рік 2026/2027</span>
+    <h1>Розклад уроків</h1>
+    <div class="banner" id="banner" hidden>Показано зразок розкладу для перевірки вигляду сторінки. Справжній розклад ліцею додається файлом data/schedule.csv.</div>
+
+    <div class="controls">
+      <div>
+        <span class="label" id="lblView">Вигляд</span>
+        <div class="seg" role="group" aria-labelledby="lblView">
+          <button type="button" id="vGen" aria-pressed="true">Загальний</button>
+          <button type="button" id="vCls" aria-pressed="false">По класу</button>
+        </div>
+      </div>
+      <div id="dayBox">
+        <span class="label" id="lblDay">День</span>
+        <div class="chips" id="dayChips" role="group" aria-labelledby="lblDay"></div>
+      </div>
+      <div id="clsBox" hidden>
+        <span class="label" id="lblCls">Клас</span>
+        <div class="chips" id="clsChips" role="group" aria-labelledby="lblCls"></div>
+      </div>
+    </div>
+
+    <div class="sched" id="sched" tabindex="0" aria-live="polite"></div>
+    <div class="legend"><span><i class="a"></i>Урок зараз</span><span><i class="b"></i>Сьогодні</span><span id="upd"></span></div>
+  </div>
+</main>
+
+<dialog class="modal" id="modal" aria-labelledby="mTitle">
+  <div class="mhead"><span class="eyebrow" id="mDate"></span><button type="button" class="mclose" id="mClose">Закрити</button></div>
+  <div class="mbody" id="mBody"></div>
+</dialog>
+
+<footer><div class="wrap">© Кушницький ліцей. Новини публікуються на сайті та синхронізуються зі сторінки у Facebook.</div></footer>
+
+<script>
+(function () {
+  "use strict";
+  var TZ = "Europe/Kyiv";
+  // Розклад дзвінків: змініть на свій. Формат "ГГ:ХХ".
+  var BELLS = [
+    ["08:30", "09:15"], ["09:25", "10:10"], ["10:30", "11:15"], ["11:25", "12:10"],
+    ["12:20", "13:05"], ["13:15", "14:00"], ["14:10", "14:55"]
+  ];
+  function mins(s) { var p = s.split(":"); return +p[0] * 60 + +p[1]; }
+
+  // таблиця розкладу
+  var tb = document.getElementById("schedBody");
+  function buildBells() {
+  tb.textContent = "";
+  BELLS.forEach(function (b, i) {
+    var tr = document.createElement("tr");
+    tr.id = "lesson" + i;
+    var gap = i < BELLS.length - 1 ? (mins(BELLS[i + 1][0]) - mins(b[1])) + " хв" : "—";
+    [String(i + 1), b[0], b[1], gap].forEach(function (v, k) {
+      var td = document.createElement("td"); if (k) td.className = "t"; td.textContent = v; tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+  }
+  buildBells();
+  loadData("schedule.json").then(function (d) {
+    if (d && d.bells && d.bells.length) { BELLS = d.bells; buildBells(); tick(); }
+  }).catch(function () {});
+
+  // живий дзвінок
+  function nowKyiv() {
+    var p = new Intl.DateTimeFormat("uk-UA", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false, weekday: "short" }).formatToParts(new Date());
+    var h = 0, m = 0, wd = "";
+    p.forEach(function (x) { if (x.type === "hour") h = +x.value % 24; if (x.type === "minute") m = +x.value; if (x.type === "weekday") wd = x.value; });
+    return { t: h * 60 + m, label: (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m, wd: wd };
+  }
+  function tick() {
+    var n = nowKyiv(), el = function (id) { return document.getElementById(id); };
+    el("clock").textContent = n.label;
+    var weekend = /сб|нд/i.test(n.wd);
+    var big = el("bigNum"), unit = el("bigUnit"), state = el("bellState"), fill = el("bellFill"), next = el("bellNext"), bar = el("bellBar");
+    Array.prototype.forEach.call(tb.children, function (r) { r.classList.remove("now"); });
+    var setBig = function (txt, u) { big.firstChild.nodeValue = txt; unit.textContent = u || ""; };
+    if (weekend) { setBig("—", ""); state.textContent = "Сьогодні вихідний. Уроки у понеділок о " + BELLS[0][0] + "."; fill.style.width = "0"; next.textContent = ""; return; }
+    var cur = -1, brk = -1;
+    BELLS.forEach(function (b, i) {
+      if (n.t >= mins(b[0]) && n.t < mins(b[1])) cur = i;
+      else if (i < BELLS.length - 1 && n.t >= mins(b[1]) && n.t < mins(BELLS[i + 1][0])) brk = i;
+    });
+    if (cur >= 0) {
+      var s = mins(BELLS[cur][0]), e = mins(BELLS[cur][1]), left = e - n.t, pct = Math.round((n.t - s) / (e - s) * 100);
+      setBig(String(cur + 1), "урок");
+      state.textContent = "До дзвінка " + left + " хв";
+      fill.style.width = pct + "%"; bar.setAttribute("aria-valuenow", pct);
+      next.textContent = BELLS[cur][0] + " → " + BELLS[cur][1];
+      document.getElementById("lesson" + cur).classList.add("now");
+    } else if (brk >= 0) {
+      var nx = mins(BELLS[brk + 1][0]) - n.t, bl = mins(BELLS[brk + 1][0]) - mins(BELLS[brk][1]);
+      setBig(String(nx), "хв");
+      state.textContent = "Перерва. Далі " + (brk + 2) + " урок";
+      fill.style.width = Math.round((bl - nx) / bl * 100) + "%";
+      next.textContent = "Початок о " + BELLS[brk + 1][0];
+    } else if (n.t < mins(BELLS[0][0])) {
+      setBig(BELLS[0][0], ""); state.textContent = "Уроки ще не почалися"; fill.style.width = "0"; next.textContent = "";
+    } else {
+      setBig("—", ""); state.textContent = "Уроки на сьогодні завершено"; fill.style.width = "100%"; next.textContent = "";
+    }
+  }
+  tick(); setInterval(tick, 20000);
+
+  // новини
+  var grid = document.getElementById("newsGrid"), moreBtn = document.getElementById("moreBtn"), info = document.getElementById("syncInfo");
+  var POSTS = [], shown = 0, STEP = 6;
+  var fmt = new Intl.DateTimeFormat("uk-UA", { day: "numeric", month: "long", year: "numeric" });
+
+  var modal = document.getElementById("modal"), mBody = document.getElementById("mBody");
+  function openModal(date, nodes) {
+    document.getElementById("mDate").textContent = date || "";
+    mBody.textContent = ""; nodes.forEach(function (n) { mBody.appendChild(n); });
+    if (modal.showModal) { if (!modal.open) modal.showModal(); } else modal.setAttribute("open", "");
+    modal.scrollTop = 0;
+  }
+  document.getElementById("mClose").addEventListener("click", function () { modal.close ? modal.close() : modal.removeAttribute("open"); });
+  modal.addEventListener("click", function (e) { if (e.target === modal) modal.close(); });
+  function photoGrid(list) {
+    var g = document.createElement("div"); g.className = "photos";
+    list.forEach(function (src) {
+      var a = document.createElement("a"); a.href = src; a.target = "_blank"; a.rel = "noopener";
+      var im = document.createElement("img"); im.loading = "lazy"; im.alt = ""; im.src = src; a.appendChild(im); g.appendChild(a);
+    });
+    return g;
+  }
+  function openPost(p) {
+    var d = new Date(p.date), nodes = [];
+    var h = document.createElement("h3"); h.id = "mTitle"; h.textContent = p.title; nodes.push(h);
+    if (p.image) { var im = document.createElement("img"); im.src = p.image; im.alt = ""; im.style.cssText = "width:100%;border-radius:12px;display:block"; nodes.push(im); }
+    if (p.body) { var t = document.createElement("p"); t.className = "mtext"; t.textContent = p.body; nodes.push(t); }
+    if (p.gallery && p.gallery.length) nodes.push(photoGrid(p.gallery));
+    if (p.files && p.files.length) {
+      var ul = document.createElement("ul"); ul.className = "files";
+      p.files.forEach(function (f) { var li = document.createElement("li"), a = document.createElement("a"); a.href = f.file; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Документ: " + (f.title || f.file.split("/").pop()); li.appendChild(a); ul.appendChild(li); });
+      nodes.push(ul);
+    }
+    openModal(isNaN(d) ? "" : fmt.format(d), nodes);
+  }
+  // новина, створена вручну в адмін-панелі, приводиться до того ж вигляду, що й пост з Facebook
+  function fromManual(m, i) {
+    return { id: "manual-" + i, date: m.date, title: m.title || "Новина", body: (m.text || "").trim(), text: (m.title || "Новина") + "\n" + (m.text || ""),
+      image: m.image || (m.gallery && m.gallery[0]) || "", gallery: m.gallery || [], files: (m.files || []).filter(function (f) { return f && f.file; }), pinned: !!m.pinned, manual: true };
+  }
+
+  function card(p) {
+    var lines = String(p.text || "").trim().split(/\n+/);
+    var title = p.manual ? p.title : (lines.shift() || "Публікація");
+    var body = p.manual ? p.body : lines.join("\n");
+    if (title.length > 110) { body = title.slice(110) + (body ? "\n" + body : ""); title = title.slice(0, 110).replace(/\s+\S*$/, "") + "…"; }
+    var d = new Date(p.date), a = document.createElement("article"); a.className = "post";
+    var ph = document.createElement("div");
+    if (p.image) { ph.className = "ph"; var im = document.createElement("img"); im.loading = "lazy"; im.alt = ""; im.src = p.image; im.onerror = function () { ph.className = "ph none"; ph.textContent = "К"; }; ph.appendChild(im); }
+    else { ph.className = "ph none"; ph.textContent = "К"; }
+    var b = document.createElement("div"); b.className = "body";
+    if (p.pinned) { var pn = document.createElement("span"); pn.className = "pin"; pn.textContent = "Закріплено"; b.appendChild(pn); }
+    if (p.sample || p.legacy) { var tg = document.createElement("span"); tg.className = "tag"; tg.textContent = p.legacy ? "Зі старого сайту" : "Приклад"; b.appendChild(tg); }
+    var t = document.createElement("time"); t.dateTime = isNaN(d) ? "" : d.toISOString(); t.textContent = isNaN(d) ? "" : fmt.format(d); b.appendChild(t);
+    var h = document.createElement("h3"); h.textContent = title; b.appendChild(h);
+    if (body) { var pp = document.createElement("p"); pp.textContent = body; b.appendChild(pp); }
+    if (p.manual) { var bt = document.createElement("button"); bt.type = "button"; bt.className = "more"; bt.textContent = "Читати далі →"; bt.style.color = "var(--accent)"; bt.addEventListener("click", function () { openPost(p); }); b.appendChild(bt); }
+    else if (p.url) { var l = document.createElement("a"); l.className = "more"; l.href = p.url; l.target = "_blank"; l.rel = "noopener"; l.textContent = p.legacy ? "Повний текст на старому сайті →" : "Читати у Facebook →"; b.appendChild(l); }
+    a.appendChild(ph); a.appendChild(b); return a;
+  }
+  function render() {
+    if (shown === 0) grid.textContent = "";
+    POSTS.slice(shown, shown + STEP).forEach(function (p) { grid.appendChild(card(p)); });
+    shown = Math.min(POSTS.length, shown + STEP);
+    moreBtn.hidden = shown >= POSTS.length;
+  }
+  moreBtn.addEventListener("click", render);
+
+  Promise.all([loadData("posts.json").catch(function () { return { posts: [] }; }), loadData("posts-manual.json").catch(function () { return { posts: [] }; })]).then(function (res) {
+    var data = res[0], manual = (res[1].posts || []).filter(function (m) { return m && m.title; }).map(fromManual);
+    POSTS = manual.concat(data.posts || []).sort(function (a, b) { return (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || new Date(b.date) - new Date(a.date); });
+    if (!POSTS.length) { grid.textContent = "Поки що немає публікацій."; return; }
+    render();
+    var u = new Date(data.updated);
+    info.textContent = manual.length && data.source !== "facebook" ? "" : data.source === "legacy" ? "Показано новини зі старого сайту. Нові публікації з'являться після підключення Facebook." : (isNaN(u) ? "" : "Оновлено " + fmt.format(u) + ".");
+    if (data.pageUrl && data.source === "facebook") document.getElementById("fbLink").href = data.pageUrl;
+  }).catch(function () { grid.textContent = "Не вдалося завантажити новини. Спробуйте оновити сторінку."; });
+
+  // допоміжні списки
+  function getJSON(u) { return window.loadData(u); }
+  function acc(title, count, items, open) {
+    var d = document.createElement("details"); d.className = "acc"; if (open) d.open = true;
+    var s = document.createElement("summary"); s.appendChild(document.createTextNode(title));
+    var c = document.createElement("span"); c.className = "cnt"; c.textContent = count; s.appendChild(c); d.appendChild(s);
+    var ul = document.createElement("ul"); items.forEach(function (li) { ul.appendChild(li); }); d.appendChild(ul); return d;
+  }
+  getJSON("staff.json").then(function (data) {
+    var host = document.getElementById("staffList");
+    data.groups.forEach(function (g, i) {
+      var items = g.people.map(function (p) {
+        var li = document.createElement("li"); li.appendChild(document.createTextNode(p.name));
+        var sp = document.createElement("span"); sp.textContent = p.role; li.appendChild(sp); return li;
+      });
+      host.appendChild(acc(g.title, String(g.people.length), items, i === 0));
+    });
+  }).catch(function () { document.getElementById("staffList").textContent = "Список вчителів тимчасово недоступний."; });
+  getJSON("docs.json").then(function (data) {
+    var host = document.getElementById("docList");
+    data.groups.forEach(function (g, i) {
+      var items = g.links.map(function (l) {
+        var li = document.createElement("li"), a = document.createElement("a");
+        a.href = l.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = l.title; li.appendChild(a); return li;
+      });
+      host.appendChild(acc(g.title, String(g.links.length), items, i === 0));
+    });
+  }).catch(function () { document.getElementById("docList").textContent = "Документи тимчасово недоступні."; });
+  getJSON("gallery.json").then(function (data) {
+    var albums = (data.albums || []).filter(function (a) { return a && a.photos && a.photos.length; });
+    if (!albums.length) return;
+    albums.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+    document.getElementById("gallery").hidden = false;
+    var host = document.getElementById("albums");
+    albums.forEach(function (al) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "album";
+      var ph = document.createElement("div"); ph.className = "ph"; var im = document.createElement("img"); im.loading = "lazy"; im.alt = ""; im.src = al.photos[0]; ph.appendChild(im); b.appendChild(ph);
+      var m = document.createElement("div"); m.className = "meta";
+      var t = document.createElement("b"); t.textContent = al.title; m.appendChild(t);
+      var d = new Date(al.date), c = document.createElement("span"); c.textContent = (isNaN(d) ? "" : fmt.format(d) + " · ") + al.photos.length + " фото"; m.appendChild(c); b.appendChild(m);
+      b.addEventListener("click", function () {
+        var h = document.createElement("h3"); h.id = "mTitle"; h.textContent = al.title; var nodes = [h];
+        if (al.description) { var p = document.createElement("p"); p.className = "mtext"; p.textContent = al.description; nodes.push(p); }
+        nodes.push(photoGrid(al.photos)); openModal(isNaN(d) ? "" : fmt.format(d), nodes);
+      });
+      host.appendChild(b);
+    });
+  }).catch(function () {});
+  getJSON("streets.json").then(function (a) {
+    document.getElementById("streets").textContent = "Вулиці села Кушниця: " + a.join(", ") + ".";
+  }).catch(function () {});
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var TZ = "Europe/Kyiv";
+  var SHORT = ["Пн", "Вт", "Ср", "Чт", "Пт"];
+  var $ = function (id) { return document.getElementById(id); };
+  var data = null, view = "general", day = 1, clsId = null, active = false;
+
+  function nowKyiv() {
+    var p = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false, weekday: "short" }).formatToParts(new Date());
+    var h = 0, m = 0, wd = "";
+    p.forEach(function (x) { if (x.type === "hour") h = +x.value % 24; if (x.type === "minute") m = +x.value; if (x.type === "weekday") wd = x.value; });
+    return { t: h * 60 + m, d: ["Mon", "Tue", "Wed", "Thu", "Fri"].indexOf(wd) + 1 };
+  }
+  function mins(s) { var p = s.split(":"); return +p[0] * 60 + +p[1]; }
+  function currentLesson(n) {
+    if (!n.d) return -1;
+    for (var i = 0; i < data.bells.length; i++) if (n.t >= mins(data.bells[i][0]) && n.t < mins(data.bells[i][1])) return i + 1;
+    return -1;
+  }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function lessonCell(l, extra) {
+    var td = el("td", extra || "");
+    if (!l) { td.className += " free"; td.textContent = "—"; return td; }
+    td.appendChild(document.createTextNode(l.s));
+    var meta = [l.t, l.r ? "каб. " + l.r : ""].filter(Boolean).join(" · ");
+    if (meta) td.appendChild(el("small", "", meta));
+    return td;
+  }
+  function numCell(i, th) {
+    var c = el(th ? "th" : "td", "num"); if (th) { c.scope = "row"; }
+    c.appendChild(el("b", "", String(i)));
+    var b = data.bells[i - 1]; if (b) c.appendChild(el("span", "", b[0] + "–" + b[1]));
+    return c;
+  }
+  function maxLessons(classes, dayKey) {
+    var m = 0;
+    classes.forEach(function (c) { (dayKey ? [c.days[dayKey] || []] : Object.keys(c.days).map(function (k) { return c.days[k]; })).forEach(function (a) { m = Math.max(m, a.length); }); });
+    return m;
+  }
+
+  function renderGeneral() {
+    var n = nowKyiv(), cur = n.d === day ? currentLesson(n) : -1;
+    var rows = Math.max(maxLessons(data.classes, String(day)), 1);
+    var t = el("table", "general"), thead = el("thead"), hr = el("tr");
+    var corner = el("th", "num", "Урок"); corner.scope = "col"; hr.appendChild(corner);
+    data.classes.forEach(function (c) { var th = el("th", "", c.name); th.scope = "col"; hr.appendChild(th); });
+    thead.appendChild(hr); t.appendChild(thead);
+    var tb = el("tbody");
+    for (var i = 1; i <= rows; i++) {
+      var tr = el("tr"); tr.appendChild(numCell(i, true));
+      data.classes.forEach(function (c) {
+        var l = (c.days[String(day)] || [])[i - 1];
+        tr.appendChild(lessonCell(l, i === cur && l ? "now" : ""));
+      });
+      tb.appendChild(tr);
+    }
+    t.appendChild(tb); return t;
+  }
+
+  function renderClass() {
+    var c = data.classes.filter(function (x) { return x.id === clsId; })[0];
+    if (!c) return el("div", "empty", "Оберіть клас.");
+    var n = nowKyiv(), cur = currentLesson(n);
+    var rows = Math.max(maxLessons([c]), 1);
+    var t = el("table", "byclass"), thead = el("thead"), hr = el("tr");
+    var corner = el("th", "num", "Урок"); corner.scope = "col"; hr.appendChild(corner);
+    data.days.forEach(function (d, k) { var th = el("th", n.d === k + 1 ? "col-today" : "", d); th.scope = "col"; hr.appendChild(th); });
+    thead.appendChild(hr); t.appendChild(thead);
+    var tb = el("tbody");
+    for (var i = 1; i <= rows; i++) {
+      var tr = el("tr"); tr.appendChild(numCell(i, true));
+      data.days.forEach(function (d, k) {
+        var l = (c.days[String(k + 1)] || [])[i - 1];
+        var cls = (n.d === k + 1 ? "col-today" : "") + (n.d === k + 1 && i === cur && l ? " now" : "");
+        tr.appendChild(lessonCell(l, cls.trim()));
+      });
+      tb.appendChild(tr);
+    }
+    t.appendChild(tb); return t;
+  }
+
+  function chips(host, items, active, onPick) {
+    host.textContent = "";
+    items.forEach(function (it) {
+      var b = el("button", "chip", it.label); b.type = "button"; b.setAttribute("aria-pressed", String(it.value === active));
+      if (it.today) b.appendChild(el("span", "today"));
+      if (it.title) b.title = it.title;
+      b.addEventListener("click", function () { onPick(it.value); });
+      host.appendChild(b);
+    });
+  }
+
+  function render() {
+    $("vGen").setAttribute("aria-pressed", String(view === "general"));
+    $("vCls").setAttribute("aria-pressed", String(view === "class"));
+    $("dayBox").hidden = view !== "general"; $("clsBox").hidden = view !== "class";
+    var n = nowKyiv();
+    chips($("dayChips"), data.days.map(function (d, i) { return { label: SHORT[i], value: i + 1, title: d, today: n.d === i + 1 }; }), day, function (v) { day = v; render(); });
+    chips($("clsChips"), data.classes.map(function (c) { return { label: c.name, value: c.id }; }), clsId, function (v) { clsId = v; store("lyceum-class", v); setHash(); render(); });
+    var host = $("sched"); host.textContent = "";
+    host.appendChild(view === "general" ? renderGeneral() : renderClass());
+  }
+
+  function setHash() {
+    if (!active) return;
+    var h = view === "class" && clsId ? "rozklad-" + clsId : "rozklad";
+    try { if (location.hash.slice(1) !== h) history.replaceState(null, "", "#" + h); } catch (e) { try { location.hash = h; } catch (e2) {} }
+  }
+  function readHash(hh) {
+    var h = typeof hh === "string" ? hh : location.hash.slice(1), m = /^rozklad-(\w+)$/.exec(h);
+    if (m && data && data.classes.some(function (c) { return c.id === m[1]; })) { view = "class"; clsId = m[1]; }
+    else if (h === "rozklad") view = "general";
+  }
+  $("vGen").addEventListener("click", function () { view = "general"; setHash(); render(); });
+  $("vCls").addEventListener("click", function () { view = "class"; if (!clsId) clsId = data.classes[0].id; setHash(); render(); });
+  window.__sched = { show: function (on, h) { active = on; if (on) { readHash(h); if (data) render(); } } };
+
+  loadData("schedule.json").then(function (d) {
+    data = d;
+    if (!data.classes || !data.classes.length) { $("sched").appendChild(el("div", "empty", "Розклад ще не додано.")); return; }
+    $("banner").hidden = !data.sample;
+    if (data.updated) $("upd").textContent = "Оновлено: " + data.updated;
+    var n = nowKyiv(); day = n.d || 1;
+    var saved = store("lyceum-class");
+    clsId = data.classes.some(function (c) { return c.id === saved; }) ? saved : data.classes[0].id;
+    readHash(); if (active) render();
+    setInterval(function () { if (!document.hidden && active) render(); }, 60000);
+  }).catch(function () { $("sched").appendChild(el("div", "empty", "Не вдалося завантажити розклад. Спробуйте оновити сторінку.")); });
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var mainV = document.getElementById("top"), schedV = document.getElementById("viewSchedule");
+  function route(hash) {
+    var h = decodeURIComponent(typeof hash === "string" ? hash : location.hash.slice(1));
+    var isSched = /^rozklad(-\w+)?$/.test(h);
+    mainV.hidden = isSched; schedV.hidden = !isSched;
+    try { if (window.__sched) window.__sched.show(isSched, h); } catch (e) { console.error(e); }
+    document.title = isSched ? "Розклад уроків Кушницького ліцею" : "Кушницький ліцей";
+    if (isSched) { window.scrollTo(0, 0); return; }
+    var t = h && document.getElementById(h);
+    if (t) t.scrollIntoView(); else window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", function () { route(); });
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var h = a.getAttribute("href").slice(1);
+    if (!h) return;
+    e.preventDefault();
+    route(h);
+    try { if (location.hash.slice(1) !== h) history.replaceState(null, "", "#" + h); } catch (err) {}
+  });
+  route();
+})();
+</script>
+
+</body>
+</html>
