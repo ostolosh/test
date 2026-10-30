@@ -22,6 +22,8 @@
   --accent-ink: #ffffff;
   --sun: #f0b429;
   --sun-ink: #3a2a00;
+  --alert: #b3261e;
+  --alert-ink: #ffffff;
   --f-display: "Unbounded", "Onest", system-ui, sans-serif;
   --f-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -30,12 +32,12 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0e1613; --surface: #15201b; --ink: #e7efe9; --muted: #9fb0a6; --line: #26352d;
-    --accent: #3fc79a; --accent-ink: #06241a; --sun-ink: #3a2a00; color-scheme: dark;
+    --accent: #3fc79a; --accent-ink: #06241a; --sun-ink: #3a2a00; --alert: #ff8a7a; --alert-ink: #3b0a05; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0e1613; --surface: #15201b; --ink: #e7efe9; --muted: #9fb0a6; --line: #26352d;
-  --accent: #3fc79a; --accent-ink: #06241a; --sun-ink: #3a2a00; color-scheme: dark;
+  --accent: #3fc79a; --accent-ink: #06241a; --sun-ink: #3a2a00; --alert: #ff8a7a; --alert-ink: #3b0a05; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
@@ -61,7 +63,15 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; 
 nav { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
 nav a { text-decoration: none; padding: 8px 12px; border-radius: 999px; font-weight: 500; font-size: 14px; color: var(--muted); }
 nav a:hover { background: var(--surface); color: var(--ink); }
-@media (max-width: 720px) { nav a:not(.keep) { display: none; } }
+.menubtn { display: none; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font: 600 14px var(--f-body); cursor: pointer; align-items: center; gap: 8px; }
+.menubtn i { display: block; width: 16px; height: 2px; background: currentColor; box-shadow: 0 5px 0 currentColor, 0 -5px 0 currentColor; }
+@media (max-width: 1100px) {
+  .menubtn { display: inline-flex; }
+  header.top nav { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; flex-wrap: nowrap; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); box-shadow: 0 12px 24px rgba(0,0,0,.12); max-height: calc(100vh - 80px); overflow-y: auto; }
+  header.top nav.open { display: flex; }
+  header.top nav a { padding: 14px 8px; border-radius: 10px; font-size: 17px; color: var(--ink); border-bottom: 1px solid var(--line); }
+  header.top nav a:last-child { border-bottom: 0; }
+}
 
 /* hero */
 .hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; padding-block: 56px 48px; align-items: center; }
@@ -132,6 +142,62 @@ dialog.modal::backdrop { background: rgba(8, 16, 12, .6); }
 .album .meta { padding: 12px 14px 14px; display: grid; gap: 2px; }
 .album b { font-weight: 600; }
 .album span { color: var(--muted); font-size: 13px; }
+
+.tools { display: flex; gap: 8px; align-items: center; }
+.iconbtn { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+.iconbtn:hover { border-color: var(--accent); }
+.iconbtn svg { width: 20px; height: 20px; }
+.announce { margin-top: 12px; border-radius: 14px; background: var(--accent); color: var(--accent-ink); }
+.announce.warning { background: var(--sun); color: var(--sun-ink); }
+.announce.urgent { background: var(--alert); color: var(--alert-ink); }
+.announce .row { display: flex; gap: 8px 16px; align-items: center; padding: 10px 12px 10px 16px; flex-wrap: wrap; }
+.announce .txt { flex: 1 1 260px; min-width: 0; }
+.announce a { color: inherit; font-weight: 700; text-underline-offset: 3px; }
+.announce .x { margin-left: auto; min-width: 40px; min-height: 40px; border-radius: 999px; border: 1.5px solid currentColor; background: transparent; color: inherit; font: 600 20px/1 var(--f-body); cursor: pointer; }
+a.chip { display: inline-flex; align-items: center; text-decoration: none; }
+.quick { margin: -12px 0 28px; }
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 12px; }
+.mday { border: 1px solid var(--line); background: var(--surface); border-radius: var(--r); padding: 16px; min-width: 0; }
+.mday.today { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.mday h3 { font-size: 15px; display: flex; justify-content: space-between; gap: 8px; }
+.mday h3 em { font: 500 11px var(--f-mono); color: var(--accent); font-style: normal; letter-spacing: .06em; text-transform: uppercase; }
+.mday ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
+.album .ph.none { display: grid; place-items: center; background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--bg))); color: var(--accent-ink); font: 700 40px var(--f-display); }
+.album .ph.cert { background: var(--surface); }
+.album .ph.cert img { object-fit: contain; }
+.filters { margin: 0 0 20px; }
+.more-row { margin-top: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+.more-row button { font: 600 15px var(--f-body); min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+.modal .kv { margin: 0; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
+.modal .kv b { color: var(--ink); font-weight: 600; }
+.modal ul.eq { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.modal .share { display: flex; gap: 10px; flex-wrap: wrap; }
+.modal .share a { min-height: 40px; padding: 0 14px; display: inline-flex; align-items: center; border: 1.5px solid var(--line); border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 14px; background: var(--surface); }
+.modal img.big { width: 100%; max-height: 70vh; object-fit: contain; border-radius: 12px; background: var(--surface); display: block; }
+.form { display: grid; gap: 14px; max-width: 640px; }
+.form label { display: grid; gap: 6px; font-weight: 600; font-size: 14px; }
+.form input, .form select, .form textarea { font: 400 16px var(--f-body); min-height: 46px; padding: 10px 12px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); width: 100%; }
+.form textarea { min-height: 130px; resize: vertical; }
+.form .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; color: var(--muted); }
+.form .check input { width: 22px; min-height: 22px; margin-top: 2px; flex: none; }
+.form .hp { position: absolute; left: -9999px; height: 0; overflow: hidden; }
+.form .status { min-height: 1.4em; font-size: 15px; }
+.form .status.ok { color: var(--accent); font-weight: 600; }
+.form .status.err { color: var(--alert); font-weight: 600; }
+.form button[type=submit] { justify-self: start; cursor: pointer; font-family: var(--f-body); font-size: 16px; }
+.form button[disabled] { opacity: .6; cursor: progress; }
+#searchDlg .mbody { gap: 12px; }
+#searchDlg input { font: 400 18px var(--f-body); min-height: 52px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); width: 100%; }
+.res h4 { font: 500 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 14px 0 8px; }
+.res a { display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 8px; text-decoration: none; background: var(--surface); overflow-wrap: anywhere; }
+.res a:hover, .res a:focus-visible { border-color: var(--accent); }
+.res a b { display: block; font-weight: 600; }
+.res a span { color: var(--muted); font-size: 14px; display: block; }
+.res .none { color: var(--muted); }
+.calbox { margin-top: 20px; padding: 18px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); display: grid; gap: 12px; }
+.calbox p { margin: 0; color: var(--muted); font-size: 14px; max-width: 70ch; }
+.calbox h3 { font-size: 17px; }
+.calbox .btns .btn { min-height: 42px; padding: 0 18px; font-size: 14px; }
 .tag { align-self: flex-start; font: 500 11px var(--f-mono); padding: 3px 8px; border-radius: 99px; background: var(--sun); color: var(--sun-ink); }
 .newsfoot { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px; color: var(--muted); font-size: 14px; }
 .newsfoot button { font: 600 15px var(--f-body); min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
@@ -209,23 +275,128 @@ footer { border-top: 1px solid var(--line); padding-block: 28px max(28px, env(sa
 @media (max-width: 560px) { .sched th, .sched td { padding: 9px 10px; } .sched .num { min-width: 70px; width: 70px; } }
 </style>
 
+<div class="wrap" id="announceHost"></div>
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#top"><span class="mark">К</span><span>Кушницький<br>ліцей</span></a>
-    <nav aria-label="Основна навігація">
+    <nav aria-label="Основна навігація" id="mainNav">
       <a class="keep" href="#news">Новини</a>
-      <a href="#about">Про ліцей</a>
-      <a href="#gallery">Фото</a>
-      <a href="#staff">Вчителі</a>
       <a class="keep" href="#rozklad">Розклад</a>
+      <a href="#about">Про ліцей</a>
+      <a href="#cabinets">Кабінети</a>
+      <a href="#achievements">Досягнення</a>
       <a href="#admission">Вступ</a>
       <a href="#docs">Документи</a>
       <a class="keep" href="#contacts">Контакти</a>
     </nav>
+    <div class="tools">
+      <button type="button" class="iconbtn" id="searchBtn" aria-label="Пошук по сайту"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+      <button type="button" class="menubtn" id="menuBtn" aria-expanded="false" aria-controls="mainNav"><i aria-hidden="true"></i>Меню</button>
+    </div>
   </div>
 </header>
 
 <!--DATA-->
+<script type="application/json" id="data-announcement.json">{
+ "active": false,
+ "level": "info",
+ "title": "",
+ "text": "",
+ "link": "",
+ "linkText": "",
+ "until": ""
+}</script>
+<script type="application/json" id="data-site.json">{
+ "formEndpoint": "",
+ "formAccessKey": "",
+ "email": "kyshnica-soh@ukr.net",
+ "phone": "(031-44) 73-393",
+ "telegram": "",
+ "viber": "",
+ "facebook": ""
+}</script>
+<script type="application/json" id="data-menu.json">{
+ "sample": true,
+ "title": "Меню на тиждень (приклад)",
+ "note": "Це приклад для перевірки вигляду. Замініть своїм меню в адмін-панелі.",
+ "days": [
+  {
+   "day": "Понеділок",
+   "items": [
+    "Каша молочна",
+    "Бутерброд із маслом",
+    "Чай"
+   ]
+  },
+  {
+   "day": "Вівторок",
+   "items": [
+    "Суп овочевий",
+    "Котлета з картопляним пюре",
+    "Компот"
+   ]
+  },
+  {
+   "day": "Середа",
+   "items": [
+    "Запіканка сирна",
+    "Сметана",
+    "Какао"
+   ]
+  },
+  {
+   "day": "Четвер",
+   "items": [
+    "Борщ",
+    "Макарони з м'ясом",
+    "Узвар"
+   ]
+  },
+  {
+   "day": "П'ятниця",
+   "items": [
+    "Омлет",
+    "Салат із капусти",
+    "Чай з лимоном"
+   ]
+  }
+ ]
+}</script>
+<script type="application/json" id="data-achievements.json">{
+ "items": [
+  {
+   "sample": true,
+   "student": "Прізвище Ім'я",
+   "class": "9-А",
+   "title": "Призер II етапу олімпіади з математики",
+   "level": "Районний",
+   "place": "II місце",
+   "date": "2026-10-20T09:00:00.000Z",
+   "teacher": "",
+   "description": "Це приклад картки. Додайте справжні досягнення в адмін-панелі, разом із фото грамоти.",
+   "photo": "",
+   "certificate": ""
+  }
+ ]
+}</script>
+<script type="application/json" id="data-cabinets.json">{
+ "items": [
+  {
+   "sample": true,
+   "title": "Кабінет інформатики (приклад)",
+   "area": "Інформатична",
+   "room": "",
+   "teacher": "",
+   "description": "Це приклад картки. Опишіть кабінет, додайте фото класу, перелік обладнання та вчителя, закріпленого за ним.",
+   "equipment": [
+    "Комп'ютери",
+    "Проєктор"
+   ],
+   "photo": "",
+   "gallery": []
+  }
+ ]
+}</script>
 <script type="application/json" id="data-posts.json">{
   "updated": "2026-10-29T10:00:00.000Z",
   "source": "legacy",
@@ -1999,6 +2170,9 @@ footer { border-top: 1px solid var(--line); padding-block: 28px max(28px, env(sa
 <!--/DATA-->
 <script>
 /* Завантаження даних: спершу файл, якщо недоступний, то вбудована копія. */
+window.__idx = [];
+window.__addIdx = function (list) { window.__idx = window.__idx.concat(list); };
+window.__hash = function (s) { var h = 0x811c9dc5; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 window.loadData = function (name) {
   return fetch(name, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).catch(function () {
     var n = document.getElementById("data-" + name);
@@ -2029,7 +2203,7 @@ window.loadData = function (name) {
 
   <section id="news">
     <div class="wrap">
-      <span class="eyebrow">Автоматично з Facebook</span>
+      <span class="eyebrow">Свіже з ліцею</span>
       <h2>Новини ліцею</h2>
       <div class="news" id="newsGrid"><p style="color:var(--muted)">Завантажуємо новини…</p></div>
       <div class="newsfoot">
@@ -2039,10 +2213,39 @@ window.loadData = function (name) {
     </div>
   </section>
 
+  <section id="canteen" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Їдальня</span>
+      <h2 id="canteenTitle">Меню на тиждень</h2>
+      <p class="note" id="canteenNote" style="margin:-12px 0 20px"></p>
+      <div class="menu-grid" id="menuGrid"></div>
+    </div>
+  </section>
+
+  <section id="achievements" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Досягнення</span>
+      <h2>Наші учні та їхні перемоги</h2>
+      <div class="chips filters" id="achFilter" role="group" aria-label="Рівень"></div>
+      <div class="albums" id="achGrid"></div>
+      <div class="more-row"><button type="button" id="achMore" hidden>Показати ще</button><span>Фото учнів і грамот публікуються за згодою батьків.</span></div>
+    </div>
+  </section>
+
+  <section id="cabinets" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Кабінети й напрями</span>
+      <h2>Де і як ми вчимося</h2>
+      <div class="chips filters" id="cabFilter" role="group" aria-label="Освітня галузь"></div>
+      <div class="albums" id="cabGrid"></div>
+    </div>
+  </section>
+
   <section id="about">
     <div class="wrap">
       <span class="eyebrow">Про нас</span>
       <h2>Школа з історією з 1953 року</h2>
+      <div class="chips quick"><a class="chip" href="#staff">Вчителі</a><a class="chip" id="qlGallery" href="#gallery" hidden>Фотогалерея</a><a class="chip" id="qlCanteen" href="#canteen" hidden>Їдальня</a></div>
       <div class="cols">
         <div>
           <p>Ліцей заснований у 1953 році, у нинішньому будинку працює з 1979 року. Тут навчаються діти 1–11 класів: початкова, основна та старша школа.</p>
@@ -2144,13 +2347,27 @@ window.loadData = function (name) {
     <div class="wrap">
       <span class="eyebrow">Контакти</span>
       <h2>Зв'яжіться з нами</h2>
-      <dl class="contacts">
-        <dt>Адреса</dt><dd>90151, Закарпатська область, Хустський район, с. Кушниця, вул. Шкільна, 29</dd>
-        <dt>Телефон</dt><dd>(031-44) 73-393 (приймальня)</dd>
-        <dt>Пошта</dt><dd>kyshnica-soh@ukr.net</dd>
-        <dt>Старий сайт</dt><dd><a href="https://kyshnica-soh.ucoz.ua/" target="_blank" rel="noopener">kyshnica-soh.ucoz.ua</a></dd>
-        <dt>Facebook</dt><dd><a id="fbLink" href="https://www.facebook.com/" rel="noopener">Сторінка ліцею</a></dd>
-      </dl>
+      <div class="cols">
+        <dl class="contacts" id="contactList">
+          <dt>Адреса</dt><dd>90151, Закарпатська область, Хустський район, с. Кушниця, вул. Шкільна, 29</dd>
+          <dt>Телефон</dt><dd>(031-44) 73-393 (приймальня)</dd>
+          <dt>Пошта</dt><dd>kyshnica-soh@ukr.net</dd>
+          <dt>Старий сайт</dt><dd><a href="https://kyshnica-soh.ucoz.ua/" target="_blank" rel="noopener">kyshnica-soh.ucoz.ua</a></dd>
+          <dt>Facebook</dt><dd><a id="fbLink" href="https://www.facebook.com/" rel="noopener">Сторінка ліцею</a></dd>
+        </dl>
+        <form class="form" id="contactForm" novalidate>
+          <h3 style="font-size:19px">Написати до ліцею</h3>
+          <label for="fName">Ваше ім'я<input id="fName" name="name" autocomplete="name" required></label>
+          <label for="fContact">Телефон або пошта для відповіді<input id="fContact" name="contact" autocomplete="email" required></label>
+          <label for="fTopic">Тема<select id="fTopic" name="topic">
+            <option>Запитання про вступ</option><option>Розклад і навчання</option><option>Пропозиція</option><option>Скарга</option><option>Інше</option></select></label>
+          <label for="fMsg">Повідомлення<textarea id="fMsg" name="message" required></textarea></label>
+          <div class="hp" aria-hidden="true"><label>Не заповнюйте<input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <label class="check" for="fOk"><input type="checkbox" id="fOk" name="consent"><span>Погоджуюся на обробку моїх персональних даних для відповіді на звернення.</span></label>
+          <button class="btn primary" type="submit" id="fSend">Надіслати</button>
+          <div class="status" id="fStatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
     </div>
   </section>
 </main>
@@ -2181,12 +2398,26 @@ window.loadData = function (name) {
 
     <div class="sched" id="sched" tabindex="0" aria-live="polite"></div>
     <div class="legend"><span><i class="a"></i>Урок зараз</span><span><i class="b"></i>Сьогодні</span><span id="upd"></span></div>
+    <div class="calbox" id="calBox" hidden>
+      <h3 id="calTitle">Розклад у вашому календарі</h3>
+      <p>Підпишіться на календар класу, і розклад з'явиться в телефоні та сам оновлюватиметься, коли ліцей його змінить. Google Календар може оновлювати підписки з затримкою до доби.</p>
+      <div class="btns">
+        <a class="btn primary" id="calGoogle" target="_blank" rel="noopener">Додати в Google Календар</a>
+        <a class="btn" id="calApple">Додати в Apple Календар</a>
+        <a class="btn" id="calFile" download>Завантажити файл .ics</a>
+      </div>
+    </div>
   </div>
 </main>
 
 <dialog class="modal" id="modal" aria-labelledby="mTitle">
   <div class="mhead"><span class="eyebrow" id="mDate"></span><button type="button" class="mclose" id="mClose">Закрити</button></div>
   <div class="mbody" id="mBody"></div>
+</dialog>
+
+<dialog class="modal" id="searchDlg" aria-label="Пошук по сайту">
+  <div class="mhead"><span class="eyebrow">Пошук по сайту</span><button type="button" class="mclose" id="sClose">Закрити</button></div>
+  <div class="mbody"><input type="search" id="q" placeholder="Новини, документи, вчителі, предмети…" autocomplete="off" aria-label="Запит"><div class="res" id="results"></div></div>
 </dialog>
 
 <footer><div class="wrap">© Кушницький ліцей. Новини публікуються на сайті та синхронізуються зі сторінки у Facebook.</div></footer>
@@ -2295,14 +2526,22 @@ window.loadData = function (name) {
       p.files.forEach(function (f) { var li = document.createElement("li"), a = document.createElement("a"); a.href = f.file; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Документ: " + (f.title || f.file.split("/").pop()); li.appendChild(a); ul.appendChild(li); });
       nodes.push(ul);
     }
+    if (p.manual) {
+      var link = location.href.split("#")[0] + "#post-" + p.id, sh = document.createElement("div"); sh.className = "share";
+      [["Telegram", "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent(p.title)], ["Viber", "viber://forward?text=" + encodeURIComponent(p.title + " " + link)]].forEach(function (x) {
+        var a = document.createElement("a"); a.href = x[1]; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Поділитися: " + x[0]; sh.appendChild(a);
+      });
+      nodes.push(sh);
+    }
     openModal(isNaN(d) ? "" : fmt.format(d), nodes);
   }
   // новина, створена вручну в адмін-панелі, приводиться до того ж вигляду, що й пост з Facebook
   function fromManual(m, i) {
-    return { id: "manual-" + i, date: m.date, title: m.title || "Новина", body: (m.text || "").trim(), text: (m.title || "Новина") + "\n" + (m.text || ""),
+    return { id: "m" + window.__hash((m.date || "") + "|" + m.title), date: m.date, title: m.title || "Новина", body: (m.text || "").trim(), text: (m.title || "Новина") + "\n" + (m.text || ""),
       image: m.image || (m.gallery && m.gallery[0]) || "", gallery: m.gallery || [], files: (m.files || []).filter(function (f) { return f && f.file; }), pinned: !!m.pinned, manual: true };
   }
 
+  window.__ui = { openModal: openModal, photoGrid: photoGrid, fmt: fmt };
   function card(p) {
     var lines = String(p.text || "").trim().split(/\n+/);
     var title = p.manual ? p.title : (lines.shift() || "Публікація");
@@ -2335,6 +2574,9 @@ window.loadData = function (name) {
     POSTS = manual.concat(data.posts || []).sort(function (a, b) { return (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || new Date(b.date) - new Date(a.date); });
     if (!POSTS.length) { grid.textContent = "Поки що немає публікацій."; return; }
     render();
+    window.__addIdx(POSTS.map(function (p) { var e = { k: "Новини", title: p.manual ? p.title : String(p.text || "").trim().split(/\n+/)[0], text: p.manual ? p.body : String(p.text || "") }; if (p.manual) e.act = function () { openPost(p); }; else e.href = p.url; return e; }));
+    window.__openPostById = function (id) { var q = POSTS.filter(function (x) { return x.id === id; })[0]; if (q) openPost(q); };
+    if (window.__pendingPost) { window.__openPostById(window.__pendingPost); window.__pendingPost = null; }
     var u = new Date(data.updated);
     info.textContent = manual.length && data.source !== "facebook" ? "" : data.source === "legacy" ? "Показано новини зі старого сайту. Нові публікації з'являться після підключення Facebook." : (isNaN(u) ? "" : "Оновлено " + fmt.format(u) + ".");
     if (data.pageUrl && data.source === "facebook") document.getElementById("fbLink").href = data.pageUrl;
@@ -2350,6 +2592,7 @@ window.loadData = function (name) {
   }
   getJSON("staff.json").then(function (data) {
     var host = document.getElementById("staffList");
+    window.__addIdx([].concat.apply([], data.groups.map(function (g) { return g.people.map(function (p) { return { k: "Вчителі", title: p.name, text: p.role + " " + g.title, hash: "staff" }; }); })));
     data.groups.forEach(function (g, i) {
       var items = g.people.map(function (p) {
         var li = document.createElement("li"); li.appendChild(document.createTextNode(p.name));
@@ -2360,6 +2603,7 @@ window.loadData = function (name) {
   }).catch(function () { document.getElementById("staffList").textContent = "Список вчителів тимчасово недоступний."; });
   getJSON("docs.json").then(function (data) {
     var host = document.getElementById("docList");
+    window.__addIdx([].concat.apply([], data.groups.map(function (g) { return g.links.map(function (l) { return { k: "Документи", title: l.title, text: g.title, href: l.url }; }); })));
     data.groups.forEach(function (g, i) {
       var items = g.links.map(function (l) {
         var li = document.createElement("li"), a = document.createElement("a");
@@ -2372,7 +2616,7 @@ window.loadData = function (name) {
     var albums = (data.albums || []).filter(function (a) { return a && a.photos && a.photos.length; });
     if (!albums.length) return;
     albums.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
-    document.getElementById("gallery").hidden = false;
+    document.getElementById("gallery").hidden = false; document.getElementById("qlGallery").hidden = false;
     var host = document.getElementById("albums");
     albums.forEach(function (al) {
       var b = document.createElement("button"); b.type = "button"; b.className = "album";
@@ -2477,6 +2721,15 @@ window.loadData = function (name) {
     t.appendChild(tb); return t;
   }
 
+  function updateCal() {
+    var box = $("calBox"), c = data.classes.filter(function (x) { return x.id === clsId; })[0];
+    var show = view === "class" && c && data.calendars && !data.sample && /^https?:$/.test(location.protocol);
+    box.hidden = !show; if (!show) return;
+    var url = new URL("calendar/" + clsId + ".ics", location.href).href, web = url.replace(/^https?:/, "webcal:");
+    $("calTitle").textContent = "Розклад " + c.name + " у вашому календарі";
+    $("calGoogle").href = "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(web);
+    $("calApple").href = web; $("calFile").href = url;
+  }
   function chips(host, items, active, onPick) {
     host.textContent = "";
     items.forEach(function (it) {
@@ -2497,6 +2750,7 @@ window.loadData = function (name) {
     chips($("clsChips"), data.classes.map(function (c) { return { label: c.name, value: c.id }; }), clsId, function (v) { clsId = v; store("lyceum-class", v); setHash(); render(); });
     var host = $("sched"); host.textContent = "";
     host.appendChild(view === "general" ? renderGeneral() : renderClass());
+    updateCal();
   }
 
   function setHash() {
@@ -2517,6 +2771,7 @@ window.loadData = function (name) {
     data = d;
     if (!data.classes || !data.classes.length) { $("sched").appendChild(el("div", "empty", "Розклад ще не додано.")); return; }
     $("banner").hidden = !data.sample;
+    if (window.__addIdx) window.__addIdx(data.classes.map(function (c) { return { k: "Розклад", title: "Розклад " + c.name, text: "уроки клас розклад", hash: "rozklad-" + c.id }; }));
     if (data.updated) $("upd").textContent = "Оновлено: " + data.updated;
     var n = nowKyiv(); day = n.d || 1;
     var saved = store("lyceum-class");
@@ -2532,7 +2787,14 @@ window.loadData = function (name) {
   var mainV = document.getElementById("top"), schedV = document.getElementById("viewSchedule");
   function route(hash) {
     var h = decodeURIComponent(typeof hash === "string" ? hash : location.hash.slice(1));
-    var isSched = /^rozklad(-\w+)?$/.test(h);
+    var isSched = /^rozklad(-\w+)?$/.test(h), pm = /^post-(\w+)$/.exec(h);
+    if (pm) {
+      mainV.hidden = false; schedV.hidden = true;
+      try { if (window.__sched) window.__sched.show(false, h); } catch (e) {}
+      var nw = document.getElementById("news"); if (nw) nw.scrollIntoView();
+      if (window.__openPostById) window.__openPostById(pm[1]); else window.__pendingPost = pm[1];
+      return;
+    }
     mainV.hidden = isSched; schedV.hidden = !isSched;
     try { if (window.__sched) window.__sched.show(isSched, h); } catch (e) { console.error(e); }
     document.title = isSched ? "Розклад уроків Кушницького ліцею" : "Кушницький ліцей";
@@ -2540,6 +2802,11 @@ window.loadData = function (name) {
     var t = h && document.getElementById(h);
     if (t) t.scrollIntoView(); else window.scrollTo(0, 0);
   }
+  var nav = document.getElementById("mainNav"), btn = document.getElementById("menuBtn");
+  function setMenu(open) { nav.classList.toggle("open", open); btn.setAttribute("aria-expanded", String(open)); }
+  btn.addEventListener("click", function () { setMenu(!nav.classList.contains("open")); });
+  nav.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
   window.addEventListener("hashchange", function () { route(); });
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest('a[href^="#"]');
@@ -2551,6 +2818,190 @@ window.loadData = function (name) {
     try { if (location.hash.slice(1) !== h) history.replaceState(null, "", "#" + h); } catch (err) {}
   });
   route();
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var ui = window.__ui, fmt = ui.fmt;
+  var DAYS = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця"];
+  function norm(t) { return String(t || "").toLowerCase().replace(/[ʼ’`´]/g, "'"); }
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function kyivNow() {
+    var iso = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Kyiv" }).format(new Date());
+    var wd = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Kyiv", weekday: "short" }).format(new Date());
+    return { iso: iso, dow: ["Mon", "Tue", "Wed", "Thu", "Fri"].indexOf(wd) };
+  }
+  function dateText(d) { var x = new Date(d); return isNaN(x) ? "" : fmt.format(x); }
+  function initial(t) { return String(t || "К").trim().charAt(0).toUpperCase(); }
+  function sampleTag(on) { if (!on) return null; var t = el("span", "tag", "Приклад"); return t; }
+
+  // ---------- оголошення
+  window.loadData("announcement.json").then(function (a) {
+    if (!a || !a.active || !(a.title || a.text)) return;
+    if (a.until && String(a.until).slice(0, 10) < kyivNow().iso) return;
+    var key = "ann-" + window.__hash((a.title || "") + (a.text || ""));
+    try { if (sessionStorage.getItem(key)) return; } catch (e) {}
+    var box = el("div", "announce " + (a.level === "urgent" ? "urgent" : a.level === "warning" ? "warning" : "")); box.setAttribute("role", "region"); box.setAttribute("aria-label", "Оголошення");
+    var row = el("div", "row"), txt = el("div", "txt");
+    if (a.title) txt.appendChild(el("b", "", a.title + (a.text ? ". " : "")));
+    if (a.text) txt.appendChild(document.createTextNode(a.text));
+    row.appendChild(txt);
+    if (a.link) { var l = el("a", "", a.linkText || "Докладніше"); l.href = a.link; if (!/^#/.test(a.link)) { l.target = "_blank"; l.rel = "noopener"; } row.appendChild(l); }
+    var x = el("button", "x", "×"); x.type = "button"; x.setAttribute("aria-label", "Закрити оголошення");
+    x.addEventListener("click", function () { box.remove(); try { sessionStorage.setItem(key, "1"); } catch (e) {} });
+    row.appendChild(x); box.appendChild(row); $("announceHost").appendChild(box);
+  }).catch(function () {});
+
+  // ---------- їдальня
+  window.loadData("menu.json").then(function (m) {
+    if (!m || !m.days || !m.days.length) return;
+    $("canteen").hidden = false; $("qlCanteen").hidden = false;
+    $("canteenTitle").textContent = m.title || "Меню на тиждень";
+    $("canteenNote").textContent = m.note || "";
+    var today = kyivNow().dow, host = $("menuGrid"), entries = [];
+    m.days.forEach(function (d) {
+      var i = DAYS.map(norm).indexOf(norm(d.day)), card = el("div", "mday" + (i === today ? " today" : ""));
+      var h = el("h3", "", d.day); if (i === today) h.appendChild(el("em", "", "Сьогодні")); card.appendChild(h);
+      var ul = el("ul"); (d.items || []).forEach(function (t) { ul.appendChild(el("li", "", t)); }); card.appendChild(ul); host.appendChild(card);
+      entries.push({ k: "Їдальня", title: "Меню: " + d.day, text: (d.items || []).join(", "), hash: "canteen" });
+    });
+    window.__addIdx(entries);
+  }).catch(function () {});
+
+  // ---------- картки з фільтром (досягнення, кабінети)
+  function gallerySection(o) {
+    var items = o.items, shown = 0, filter = "";
+    var grid = $(o.grid), filterBox = $(o.filter), more = o.more ? $(o.more) : null;
+    $(o.section).hidden = false;
+    function chipList() {
+      var vals = []; items.forEach(function (i) { var v = o.group(i); if (v && vals.indexOf(v) < 0) vals.push(v); });
+      filterBox.textContent = ""; if (vals.length < 2) return;
+      [""].concat(vals).forEach(function (v) {
+        var b = el("button", "chip", v || "Усі"); b.type = "button"; b.setAttribute("aria-pressed", String(v === filter));
+        b.addEventListener("click", function () { filter = v; shown = 0; grid.textContent = ""; chipList(); render(); }); filterBox.appendChild(b);
+      });
+    }
+    function list() { return items.filter(function (i) { return !filter || o.group(i) === filter; }); }
+    function render() {
+      var l = list(), step = o.step || 999;
+      l.slice(shown, shown + step).forEach(function (it) { grid.appendChild(o.card(it)); });
+      shown = Math.min(l.length, shown + step); if (more) more.hidden = shown >= l.length;
+    }
+    if (more) more.addEventListener("click", render);
+    chipList(); render();
+  }
+  function albumCard(img, cert, title, lines, sample, onClick) {
+    var b = el("button", "album"); b.type = "button";
+    var ph = el("div", "ph" + (img ? (cert ? " cert" : "") : " none"));
+    if (img) { var im = el("img"); im.loading = "lazy"; im.alt = ""; im.src = img; ph.appendChild(im); } else ph.textContent = initial(title);
+    b.appendChild(ph); var m = el("div", "meta"); var t = sampleTag(sample); if (t) { t.style.justifySelf = "start"; m.appendChild(t); }
+    m.appendChild(el("b", "", title)); lines.filter(Boolean).forEach(function (x) { m.appendChild(el("span", "", x)); });
+    b.appendChild(m); b.addEventListener("click", onClick); return b;
+  }
+
+  // ---------- досягнення
+  window.loadData("achievements.json").then(function (d) {
+    var items = (d.items || []).filter(function (i) { return i && i.title; }).sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+    if (!items.length) return;
+    gallerySection({ items: items, section: "achievements", grid: "achGrid", filter: "achFilter", more: "achMore", step: 9,
+      group: function (i) { return i.level; },
+      card: function (i) {
+        return albumCard(i.certificate || i.photo, !!i.certificate && !i.photo, i.title, [[i.student, i.class].filter(Boolean).join(", "), [i.level, i.place].filter(Boolean).join(" · ")], i.sample, function () {
+          var h = el("h3", "", i.title); h.id = "mTitle"; var nodes = [h];
+          if (i.certificate) { var c = el("img", "big"); c.src = i.certificate; c.alt = "Грамота або сертифікат"; nodes.push(c); }
+          if (i.photo) { var p = el("img", "big"); p.src = i.photo; p.alt = ""; nodes.push(p); }
+          var kv = el("p", "kv");
+          [["Учень", [i.student, i.class].filter(Boolean).join(", ")], ["Рівень", i.level], ["Результат", i.place], ["Вчитель", i.teacher]].forEach(function (r) { if (r[1]) { var row = el("span"); row.appendChild(el("b", "", r[0] + ": ")); row.appendChild(document.createTextNode(r[1])); kv.appendChild(row); kv.appendChild(document.createElement("br")); } });
+          nodes.push(kv); if (i.description) nodes.push(el("p", "mtext", i.description));
+          ui.openModal(dateText(i.date), nodes);
+        });
+      } });
+    window.__addIdx(items.map(function (i) { return { k: "Досягнення", title: i.title, text: [i.student, i.class, i.level, i.place, i.teacher].join(" "), hash: "achievements" }; }));
+  }).catch(function () {});
+
+  // ---------- кабінети й напрями
+  window.loadData("cabinets.json").then(function (d) {
+    var items = (d.items || []).filter(function (i) { return i && i.title; });
+    if (!items.length) return;
+    gallerySection({ items: items, section: "cabinets", grid: "cabGrid", filter: "cabFilter",
+      group: function (i) { return i.area; },
+      card: function (i) {
+        return albumCard(i.photo, false, i.title, [i.area, i.teacher ? "Відповідальний: " + i.teacher : ""], i.sample, function () {
+          var h = el("h3", "", i.title); h.id = "mTitle"; var nodes = [h];
+          if (i.photo) { var p = el("img", "big"); p.src = i.photo; p.alt = ""; nodes.push(p); }
+          var kv = el("p", "kv");
+          [["Галузь", i.area], ["Кабінет", i.room], ["Відповідальний", i.teacher]].forEach(function (r) { if (r[1]) { var row = el("span"); row.appendChild(el("b", "", r[0] + ": ")); row.appendChild(document.createTextNode(r[1])); kv.appendChild(row); kv.appendChild(document.createElement("br")); } });
+          if (kv.childNodes.length) nodes.push(kv);
+          if (i.description) nodes.push(el("p", "mtext", i.description));
+          if (i.equipment && i.equipment.length) { nodes.push(el("b", "", "Матеріальна база")); var ul = el("ul", "eq"); i.equipment.forEach(function (e) { ul.appendChild(el("li", "", e)); }); nodes.push(ul); }
+          if (i.gallery && i.gallery.length) nodes.push(ui.photoGrid(i.gallery));
+          ui.openModal(i.area || "", nodes);
+        });
+      } });
+    window.__addIdx(items.map(function (i) { return { k: "Кабінети", title: i.title, text: [i.area, i.teacher, i.description, (i.equipment || []).join(" ")].join(" "), hash: "cabinets" }; }));
+  }).catch(function () {});
+
+  // ---------- налаштування сайту й форма звернень
+  var site = {};
+  window.loadData("site.json").then(function (s) {
+    site = s || {};
+    var dl = $("contactList");
+    [["Telegram", site.telegram], ["Viber", site.viber]].forEach(function (r) {
+      if (!r[1]) return; var dt = el("dt", "", r[0]), dd = el("dd"), a = el("a", "", "Канал ліцею"); a.href = r[1]; a.target = "_blank"; a.rel = "noopener"; dd.appendChild(a); dl.appendChild(dt); dl.appendChild(dd);
+    });
+    if (site.facebook) $("fbLink").href = site.facebook;
+  }).catch(function () {});
+  var form = $("contactForm"), st = $("fStatus"), btn = $("fSend");
+  function say(msg, cls) { st.textContent = msg; st.className = "status " + (cls || ""); }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = new FormData(form), name = String(f.get("name") || "").trim(), contact = String(f.get("contact") || "").trim(), msg = String(f.get("message") || "").trim();
+    if (f.get("website")) { say("Дякуємо! Звернення надіслано.", "ok"); form.reset(); return; }
+    if (!name || !contact) return say("Вкажіть ім'я та телефон або пошту, щоб ми могли відповісти.", "err");
+    if (msg.length < 10) return say("Напишіть повідомлення хоча б у кількох словах.", "err");
+    if (!f.get("consent")) return say("Підтвердіть згоду на обробку персональних даних.", "err");
+    if (!site.formEndpoint) return say("Онлайн-форма ще не підключена. Напишіть на " + (site.email || "пошту ліцею") + " або зателефонуйте: " + (site.phone || "") + ".", "err");
+    btn.disabled = true; say("Надсилаємо…");
+    var body = { access_key: site.formAccessKey || undefined, subject: "Звернення з сайту: " + f.get("topic"), from_name: "Сайт ліцею", name: name, contact: contact, topic: f.get("topic"), message: msg };
+    if (/^\S+@\S+\.\S+$/.test(contact)) body.email = contact;
+    fetch(site.formEndpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!(r.ok && j.success !== false)) throw new Error(); }); })
+      .then(function () { say("Дякуємо! Звернення надіслано. Ми відповімо на вказані контакти.", "ok"); form.reset(); })
+      .catch(function () { say("Не вдалося надіслати. Спробуйте ще раз або напишіть на " + (site.email || "пошту ліцею") + ".", "err"); })
+      .then(function () { btn.disabled = false; });
+  });
+
+  // ---------- пошук
+  var dlg = $("searchDlg"), q = $("q"), res = $("results");
+  function openSearch() { if (dlg.showModal && !dlg.open) dlg.showModal(); else dlg.setAttribute("open", ""); q.value = ""; renderRes(); setTimeout(function () { q.focus(); }, 30); }
+  function closeSearch() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+  $("searchBtn").addEventListener("click", openSearch);
+  $("sClose").addEventListener("click", closeSearch);
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) closeSearch(); });
+  function renderRes() {
+    var words = norm(q.value).split(/\s+/).filter(Boolean); res.textContent = "";
+    if (!words.length) { res.appendChild(el("p", "none", "Почніть вводити слово: наприклад, «статут», «математика», «меню» або прізвище.")); return; }
+    var hits = window.__idx.map(function (e) {
+      var t = norm(e.title), x = norm(e.text), score = 0;
+      for (var i = 0; i < words.length; i++) { var inT = t.indexOf(words[i]) >= 0, inX = x.indexOf(words[i]) >= 0; if (!inT && !inX) return null; score += inT ? 3 : 1; }
+      return { e: e, score: score };
+    }).filter(Boolean).sort(function (a, b) { return b.score - a.score; }).slice(0, 40);
+    if (!hits.length) { res.appendChild(el("p", "none", "Нічого не знайдено. Спробуйте інше слово або його початок.")); return; }
+    var groups = {}, order = []; hits.forEach(function (h) { (groups[h.e.k] = groups[h.e.k] || (order.push(h.e.k), [])).push(h.e); });
+    order.forEach(function (k) {
+      res.appendChild(el("h4", "", k));
+      groups[k].forEach(function (e) {
+        var a = el("a"); a.appendChild(el("b", "", e.title)); var sn = String(e.text || "").replace(/\s+/g, " ").trim(); if (sn && e.k !== "Вчителі") a.appendChild(el("span", "", sn.length > 110 ? sn.slice(0, 110) + "…" : sn)); else if (sn) a.appendChild(el("span", "", sn));
+        if (e.href) { a.href = e.href; a.target = "_blank"; a.rel = "noopener"; a.addEventListener("click", closeSearch); }
+        else if (e.hash) { a.href = "#" + e.hash; a.addEventListener("click", closeSearch); }
+        else { a.href = "#"; a.addEventListener("click", function (ev) { ev.preventDefault(); ev.stopPropagation(); closeSearch(); e.act(); }); }
+        res.appendChild(a);
+      });
+    });
+  }
+  q.addEventListener("input", renderRes);
 })();
 </script>
 
