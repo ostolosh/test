@@ -3,7 +3,7 @@ name: Оновлення розкладу й календарів
 # Запускається, коли хтось змінює data/schedule.csv (наприклад, завантажив новий файл на GitHub).
 on:
   push:
-    branches: [main]
+    branches: [main, root]
     paths:
       - "data/schedule.csv"
   workflow_dispatch: {}
