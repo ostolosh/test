@@ -5,5 +5,11 @@
  "phone": "(031-44) 73-393",
  "telegram": "",
  "viber": "",
- "facebook": ""
+ "facebook": "",
+ "sheets": {
+  "events": "",
+  "polls": "",
+  "menu": "",
+  "announcement": ""
+ }
 }

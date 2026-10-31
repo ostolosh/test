@@ -1,0 +1,279 @@
+# Адмін-панель сайту ліцею (Sveltia CMS, сумісна з Decap CMS).
+# Адреса панелі: https://ВАШ-САЙТ/admin/
+
+backend:
+  name: github
+  repo: ВАШ_ЛОГІН/НАЗВА_РЕПОЗИТОРІЮ   # наприклад kushnytsia-lyceum/site
+  branch: main
+  base_url: https://ВАШ-ВОРКЕР.workers.dev  # адреса сервісу входу, див. README
+
+locale: uk
+site_url: https://ВАШ-САЙТ
+media_folder: uploads/files       # куди потрапляють завантажені фото й документи
+public_folder: uploads/files
+
+collections:
+  - name: news
+    label: Новини
+    files:
+      - name: manual
+        label: Новини ліцею (написані вручну)
+        file: posts-manual.json
+        format: json
+        fields:
+          - label: Новини
+            name: posts
+            widget: list
+            label_singular: новину
+            summary: "{{title}}"
+            fields:
+              - { label: Заголовок, name: title, widget: string }
+              - { label: Дата, name: date, widget: datetime }
+              - { label: Текст, name: text, widget: text, hint: "Абзаци розділяйте порожнім рядком." }
+              - { label: Головне фото, name: image, widget: image, required: false }
+              - label: Додаткові фото
+                name: gallery
+                widget: list
+                required: false
+                field: { label: Фото, name: photo, widget: image }
+              - label: Документи до новини
+                name: files
+                widget: list
+                required: false
+                fields:
+                  - { label: Назва, name: title, widget: string }
+                  - { label: Файл, name: file, widget: file }
+              - { label: Закріпити зверху, name: pinned, widget: boolean, default: false, required: false }
+
+  - name: gallery
+    label: Фотогалерея
+    files:
+      - name: albums
+        label: Альбоми
+        file: gallery.json
+        format: json
+        fields:
+          - label: Альбоми
+            name: albums
+            widget: list
+            label_singular: альбом
+            summary: "{{title}}"
+            fields:
+              - { label: Назва альбому, name: title, widget: string }
+              - { label: Дата, name: date, widget: datetime }
+              - { label: Опис, name: description, widget: text, required: false }
+              - label: Фото
+                name: photos
+                widget: list
+                field: { label: Фото, name: photo, widget: image }
+                hint: "Перше фото буде обкладинкою альбому."
+
+  - name: documents
+    label: Документи
+    files:
+      - name: docs
+        label: Документи й освітні програми
+        file: docs.json
+        format: json
+        fields:
+          - label: Розділи
+            name: groups
+            widget: list
+            label_singular: розділ
+            summary: "{{title}}"
+            fields:
+              - { label: Назва розділу, name: title, widget: string }
+              - { label: Примітка, name: note, widget: string, required: false }
+              - label: Документи
+                name: links
+                widget: list
+                label_singular: документ
+                summary: "{{title}}"
+                fields:
+                  - { label: Назва, name: title, widget: string }
+                  - { label: Файл або посилання, name: url, widget: file }
+
+  - name: people
+    label: Вчителі
+    files:
+      - name: staff
+        label: Педагогічний колектив
+        file: staff.json
+        format: json
+        fields:
+          - label: Групи
+            name: groups
+            widget: list
+            label_singular: групу
+            summary: "{{title}}"
+            fields:
+              - { label: Назва групи, name: title, widget: string }
+              - label: Працівники
+                name: people
+                widget: list
+                label_singular: працівника
+                summary: "{{name}}"
+                fields:
+                  - { label: ПІБ, name: name, widget: string }
+                  - { label: Посада, name: role, widget: string }
+
+  - name: announcement
+    label: Оголошення на сайті
+    files:
+      - name: banner
+        label: Банер угорі сторінки
+        file: announcement.json
+        format: json
+        fields:
+          - { label: Показувати, name: active, widget: boolean, default: false }
+          - { label: Вид, name: level, widget: select, default: info, options: [{ label: Звичайне, value: info }, { label: Попередження, value: warning }, { label: Терміново, value: urgent }] }
+          - { label: Заголовок, name: title, widget: string, required: false }
+          - { label: Текст, name: text, widget: string, required: false }
+          - { label: Посилання, name: link, widget: string, required: false, hint: "Адреса сторінки або #розділ, наприклад #rozklad." }
+          - { label: Текст кнопки-посилання, name: linkText, widget: string, required: false }
+          - { label: Показувати до дати, name: until, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", required: false, hint: "Після цієї дати банер зникне сам." }
+
+  - name: events
+    label: Події
+    files:
+      - name: events
+        label: Календар подій
+        file: events.json
+        format: json
+        fields:
+          - label: Події
+            name: items
+            widget: list
+            label_singular: подію
+            summary: "{{date}} · {{title}}"
+            fields:
+              - { label: Назва, name: title, widget: string }
+              - { label: Дата, name: date, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: Дата завершення, name: endDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", required: false, hint: "Лише для багатоденних подій." }
+              - { label: Початок (ГГ:ХХ), name: time, widget: string, required: false }
+              - { label: Кінець (ГГ:ХХ), name: endTime, widget: string, required: false }
+              - { label: Місце, name: place, widget: string, required: false }
+              - { label: Опис, name: text, widget: text, required: false }
+              - { label: Посилання, name: link, widget: string, required: false }
+              - { label: Title (English), name: title_en, widget: string, required: false }
+              - { label: Place (English), name: place_en, widget: string, required: false }
+              - { label: Description (English), name: text_en, widget: text, required: false }
+
+  - name: polls
+    label: Опитування
+    files:
+      - name: polls
+        label: Опитування (посилання на Google Форму)
+        file: polls.json
+        format: json
+        fields:
+          - label: Опитування
+            name: items
+            widget: list
+            label_singular: опитування
+            summary: "{{title}}"
+            fields:
+              - { label: Назва, name: title, widget: string }
+              - { label: Опис, name: text, widget: text, required: false }
+              - { label: Посилання на форму, name: link, widget: string }
+              - { label: Приймаємо до, name: until, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", required: false }
+              - { label: Текст кнопки, name: button, widget: string, required: false }
+              - { label: Title (English), name: title_en, widget: string, required: false }
+              - { label: Description (English), name: text_en, widget: text, required: false }
+
+  - name: canteen
+    label: Їдальня
+    files:
+      - name: menu
+        label: Меню на тиждень
+        file: menu.json
+        format: json
+        fields:
+          - { label: Заголовок, name: title, widget: string, hint: "Наприклад: Меню на 3–7 листопада." }
+          - { label: Примітка, name: note, widget: string, required: false }
+          - label: Дні
+            name: days
+            widget: list
+            label_singular: день
+            summary: "{{day}}"
+            fields:
+              - { label: День, name: day, widget: select, options: [Понеділок, Вівторок, Середа, Четвер, "П'ятниця"] }
+              - label: Страви
+                name: items
+                widget: list
+                field: { label: Страва, name: item, widget: string }
+
+  - name: achievements
+    label: Досягнення учнів
+    files:
+      - name: list
+        label: Досягнення
+        file: achievements.json
+        format: json
+        fields:
+          - label: Досягнення
+            name: items
+            widget: list
+            label_singular: досягнення
+            summary: "{{title}}"
+            fields:
+              - { label: Назва, name: title, widget: string, hint: "Наприклад: Призер II етапу олімпіади з математики." }
+              - { label: Учень, name: student, widget: string, hint: "Публікуйте дані та фото лише за письмовою згодою батьків." }
+              - { label: Клас, name: class, widget: string, required: false }
+              - { label: Рівень, name: level, widget: select, options: [Школа, Громада, Район, Область, Всеукраїнський, Міжнародний] }
+              - { label: Результат, name: place, widget: string, required: false, hint: "Наприклад: I місце, диплом, учасник." }
+              - { label: Дата, name: date, widget: datetime }
+              - { label: Вчитель, name: teacher, widget: string, required: false }
+              - { label: Опис, name: description, widget: text, required: false }
+              - { label: Фото грамоти або сертифіката, name: certificate, widget: image, required: false }
+              - { label: Фото учня, name: photo, widget: image, required: false }
+
+  - name: cabinets
+    label: Кабінети й напрями
+    files:
+      - name: list
+        label: Кабінети
+        file: cabinets.json
+        format: json
+        fields:
+          - label: Кабінети
+            name: items
+            widget: list
+            label_singular: кабінет
+            summary: "{{title}}"
+            fields:
+              - { label: Назва, name: title, widget: string, hint: "Наприклад: Кабінет інформатики." }
+              - label: Освітня галузь
+                name: area
+                widget: select
+                options: [Мовно-літературна, Математична, Природнича, "Соціальна і здоров'язбережна", Громадянська та історична, Технологічна, Інформатична, Мистецька, Фізкультурна, Інше]
+              - { label: Номер кабінету, name: room, widget: string, required: false }
+              - { label: Відповідальний вчитель, name: teacher, widget: string, required: false }
+              - { label: Опис, name: description, widget: text, required: false }
+              - label: Матеріальна база
+                name: equipment
+                widget: list
+                required: false
+                field: { label: Обладнання, name: item, widget: string }
+              - { label: Головне фото, name: photo, widget: image, required: false }
+              - label: Додаткові фото
+                name: gallery
+                widget: list
+                required: false
+                field: { label: Фото, name: photo, widget: image }
+
+  - name: settings
+    label: Налаштування сайту
+    files:
+      - name: site
+        label: Форма звернень і посилання
+        file: site.json
+        format: json
+        fields:
+          - { label: Адреса форми (Formspree або Web3Forms), name: formEndpoint, widget: string, required: false }
+          - { label: Ключ форми (access key), name: formAccessKey, widget: string, required: false }
+          - { label: Пошта ліцею, name: email, widget: string }
+          - { label: Телефон, name: phone, widget: string }
+          - { label: Посилання на Telegram-канал, name: telegram, widget: string, required: false }
+          - { label: Посилання на Viber-канал, name: viber, widget: string, required: false }
+          - { label: Сторінка у Facebook, name: facebook, widget: string, required: false }
